@@ -1,37 +1,110 @@
+import { Text, View, Image } from 'react-native';
 import { Tabs } from 'expo-router';
+import icons from '../../constants/icons';
 import React from 'react';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+const TabIcon = ({ source, color, name, focused }) => {
+  return (
+    <View className='items-center justify-center gap-1'>
+      <Image
+        source={source}
+        resizeMode='contain'
+        tintColor={color}
+        className='w-6 h-6'
+      />
+      <Text className={`${ focused ? 'font-NSBold' : 'font-NSLight'} text-xs`}>
+        {name}
+      </Text>
+    </View>
+  );
+};
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: '#FFA001',
+        tabBarInactiveTintColor: '#CDCDE0',
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabIcon
+              source={icons.home}
+              color={color}
+              name="Home"
+              focused={focused}
+            />
           ),
         }}
-      />
-      <Tabs.Screen
-        name="explore"
+        />
+        <Tabs.Screen
+        name="bluetooth"
         options={{
-          title: 'Explore',
+          title: 'Bluetooth',
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabIcon
+              source={icons.home}
+              color={color}
+              name="Bluetooth"
+              focused={focused}
+            />
           ),
         }}
-      />
+        />
+        <Tabs.Screen
+        name="sensors"
+        options={{
+          title: 'Sensors',
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              source={icons.home}
+              color={color}
+              name="Sensors"
+              focused={focused}
+            />
+          ),
+        }}
+        />
+        <Tabs.Screen
+        name="pupuk"
+        options={{
+          title: 'Pupuk',
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              source={icons.home}
+              color={color}
+              name="Pupuk"
+              focused={focused}
+            />
+          ),
+        }}
+        />
+        <Tabs.Screen
+        name="about"
+        options={{
+          title: 'About',
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              source={icons.home}
+              color={color}
+              name="About"
+              focused={focused}
+            />
+          ),
+        }}
+        />
     </Tabs>
   );
-}
+};
+
+export default TabsLayout;

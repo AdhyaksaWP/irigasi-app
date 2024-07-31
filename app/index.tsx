@@ -1,27 +1,37 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
-import { Link, SplashScreen } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { View, Image, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Redirect, router } from 'expo-router';
 import CustomButton from '@/components/custombutton';
-import images from '../constants/images'
-
 import React from 'react'
+import Splashimage from '@/assets/svg/splashimage';
+import Ugmlogo from '@/assets/svg/ugmlogo';
+import { useGlobalContext } from '@/context/GlobalProvider';
 
 const SplashPage = () => {
+  const {loading, isLoggedIn} = useGlobalContext();
 
+  if (!loading && isLoggedIn) return <Redirect href="/home"/>
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle={{ height: '100%'}}>
         <View className='w-full justify-center items-center h-full px-4 pb-10'>
-          <Image
-            source={images.ugmlogo}
+          <Ugmlogo/>
+          <Splashimage
+            className='my-4'
           />
-          <Image
-            source={images.splash}
-            className='my-7'
+          <CustomButton
+            title='Mulai'
+            handlePress = {() => {router.push('./sign-in')}}
+            containerStyles = 'bg-secondary w-44 h-10 rounded-lg items-center justify-center'
+            textStyles = 'font-NSBold text-white text-xl'
           />
-          <CustomButton/>
         </View>
       </ScrollView>
+      <StatusBar
+        backgroundColor='#F9C405'
+        style='dark'
+      />
     </SafeAreaView>
   )
 }

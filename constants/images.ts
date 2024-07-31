@@ -1,5 +1,5 @@
-import splash from "../assets/images/Splash.png"
-import ugmlogo from "../assets/images/UGMLogo.png"
+import splash from "../assets/images/Splash.svg"
+import ugmlogo from "../assets/images/UGMLogo.svg"
 
 export default {
   splash,

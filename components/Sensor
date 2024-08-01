@@ -1,0 +1,637 @@
+import * as React from "react";
+import { Image } from "expo-image";
+import { StyleSheet, View, Text } from "react-native";
+import {
+  Color,
+  Border,
+  Padding,
+  FontFamily,
+  FontSize,
+  StyleVariable,
+} from "../GlobalStyles";
+
+const Component = () => {
+  return (
+    <View style={styles.component1}>
+      <View
+        style={[
+          styles.property1controlScreenOff,
+          styles.property1controlLayout1,
+        ]}
+      >
+        <Image
+          style={styles.property1controlScreenOffChild}
+          contentFit="cover"
+          source={require("../assets/vector-709.png")}
+        />
+        <View style={styles.status}>
+          <View style={styles.battery}>
+            <View style={styles.border} />
+            <Image
+              style={styles.capIcon}
+              contentFit="cover"
+              source={require("../assets/cap.png")}
+            />
+            <View style={styles.capacity} />
+          </View>
+          <Image
+            style={styles.wifiIcon}
+            contentFit="cover"
+            source={require("../assets/wifi1.png")}
+          />
+          <Image
+            style={styles.cellularConnectionIcon}
+            contentFit="cover"
+            source={require("../assets/cellular-connection.png")}
+          />
+          <View style={styles.timeStyle}>
+            <Text style={styles.time}>9:41</Text>
+          </View>
+        </View>
+        <View style={[styles.turnedOffWrapper, styles.wrapperFlexBox]}>
+          <Text style={[styles.turnedOff, styles.turnedTypo]}>TURNED OFF</Text>
+        </View>
+        <Image
+          style={[
+            styles.property1controlScreenOffItem,
+            styles.property1controlLayout,
+          ]}
+          contentFit="cover"
+          source={require("../assets/ellipse-1.png")}
+        />
+        <View style={[styles.turnedOffWrapper, styles.wrapperFlexBox]}>
+          <Text style={[styles.turnedOff, styles.turnedTypo]}>TURNED OFF</Text>
+        </View>
+        <Image
+          style={[
+            styles.property1controlScreenOffItem,
+            styles.property1controlLayout,
+          ]}
+          contentFit="cover"
+          source={require("../assets/ellipse-1.png")}
+        />
+        <Image
+          style={[styles.ellipseIcon, styles.ellipseIconLayout]}
+          contentFit="cover"
+          source={require("../assets/ellipse-5.png")}
+        />
+        <Image
+          style={[styles.ellipseIcon, styles.ellipseIconLayout]}
+          contentFit="cover"
+          source={require("../assets/ellipse-41.png")}
+        />
+        <Text style={[styles.text, styles.textTypo]}>5 %</Text>
+        <View style={styles.rectangleView} />
+        <View style={[styles.dataWrapper, styles.ellipseIconLayout]}>
+          <Text style={styles.data}>Data</Text>
+        </View>
+        <View
+          style={[styles.navigationIconParent, styles.navigationIconFlexBox]}
+        >
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/home.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>Home</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/bluetooth.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>BT</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton2, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/monitor.png")}
+              />
+              <Text style={[styles.label2, styles.labelTypo]}>Sensor</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/file-text.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>Kalkulasi</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/info.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>About</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/user.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>Profile</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.iphoneIndicator}>
+          <View style={styles.line} />
+        </View>
+        <View style={styles.iphoneIndicator}>
+          <View style={styles.line} />
+        </View>
+      </View>
+      <View
+        style={[
+          styles.property1controlScreenOnS,
+          styles.property1controlLayout1,
+        ]}
+      >
+        <Image
+          style={styles.property1controlScreenOffChild}
+          contentFit="cover"
+          source={require("../assets/vector-709.png")}
+        />
+        <View style={styles.status}>
+          <View style={styles.battery}>
+            <View style={styles.border} />
+            <Image
+              style={styles.capIcon}
+              contentFit="cover"
+              source={require("../assets/cap.png")}
+            />
+            <View style={styles.capacity} />
+          </View>
+          <Image
+            style={styles.wifiIcon}
+            contentFit="cover"
+            source={require("../assets/wifi1.png")}
+          />
+          <Image
+            style={styles.cellularConnectionIcon}
+            contentFit="cover"
+            source={require("../assets/cellular-connection.png")}
+          />
+          <View style={styles.timeStyle}>
+            <Text style={styles.time}>9:41</Text>
+          </View>
+        </View>
+        <View style={[styles.turnedOffWrapper, styles.wrapperFlexBox]}>
+          <Text style={[styles.turnedOff, styles.turnedTypo]}>TURNED OFF</Text>
+        </View>
+        <Image
+          style={[
+            styles.property1controlScreenOffItem,
+            styles.property1controlLayout,
+          ]}
+          contentFit="cover"
+          source={require("../assets/ellipse-1.png")}
+        />
+        <View style={styles.status}>
+          <View style={styles.battery}>
+            <View style={styles.border} />
+            <Image
+              style={styles.capIcon}
+              contentFit="cover"
+              source={require("../assets/cap.png")}
+            />
+            <View style={styles.capacity} />
+          </View>
+          <Image
+            style={styles.wifiIcon}
+            contentFit="cover"
+            source={require("../assets/wifi1.png")}
+          />
+          <Image
+            style={styles.cellularConnectionIcon}
+            contentFit="cover"
+            source={require("../assets/cellular-connection.png")}
+          />
+          <View style={styles.timeStyle}>
+            <Text style={styles.time}>9:41</Text>
+          </View>
+        </View>
+        <View style={[styles.turnedOnWrapper, styles.wrapperFlexBox]}>
+          <Text style={[styles.turnedOn, styles.turnedTypo]}>TURNED ON</Text>
+        </View>
+        <Image
+          style={[
+            styles.property1controlScreenOnSInner,
+            styles.property1controlLayout,
+          ]}
+          contentFit="cover"
+          source={require("../assets/ellipse-2.png")}
+        />
+        <Image
+          style={[styles.ellipseIcon, styles.ellipseIconLayout]}
+          contentFit="cover"
+          source={require("../assets/ellipse-5.png")}
+        />
+        <Image
+          style={[styles.ellipseIcon, styles.ellipseIconLayout]}
+          contentFit="cover"
+          source={require("../assets/ellipse-4.png")}
+        />
+        <Text style={[styles.text1, styles.textTypo]}>95 %</Text>
+        <View style={styles.rectangleView} />
+        <View style={[styles.dataWrapper, styles.ellipseIconLayout]}>
+          <Text style={styles.data}>Data</Text>
+        </View>
+        <View
+          style={[styles.navigationIconParent, styles.navigationIconFlexBox]}
+        >
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/home.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>Home</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/bluetooth.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>BT</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton2, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/monitor.png")}
+              />
+              <Text style={[styles.label2, styles.labelTypo]}>Sensor</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/file-text.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>Kalkulasi</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/info.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>About</Text>
+            </View>
+          </View>
+          <View style={[styles.navigationIcon, styles.navigationIconFlexBox]}>
+            <View
+              style={[styles.navigationButton, styles.navigationIconFlexBox]}
+            >
+              <Image
+                style={styles.homeIcon}
+                contentFit="cover"
+                source={require("../assets/user.png")}
+              />
+              <Text style={[styles.label, styles.labelTypo]}>Profile</Text>
+            </View>
+          </View>
+        </View>
+        <View style={styles.iphoneIndicator}>
+          <View style={styles.line} />
+        </View>
+        <View style={styles.iphoneIndicator}>
+          <View style={styles.line} />
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  property1controlLayout1: {
+    height: 812,
+    width: 375,
+    backgroundColor: Color.colorGold_100,
+    borderRadius: Border.br_11xl,
+    top: 20,
+    position: "absolute",
+    overflow: "hidden",
+  },
+  wrapperFlexBox: {
+    paddingVertical: Padding.p_3xs,
+    paddingHorizontal: Padding.p_126xl,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    overflow: "hidden",
+  },
+  turnedTypo: {
+    textAlign: "left",
+    fontFamily: FontFamily.body1,
+    fontWeight: "700",
+    lineHeight: 24,
+    fontSize: FontSize.size_xl,
+  },
+  property1controlLayout: {
+    height: 50,
+    width: 50,
+    top: 447,
+    position: "absolute",
+  },
+  ellipseIconLayout: {
+    borderRadius: Border.br_21xl,
+    position: "absolute",
+  },
+  textTypo: {
+    color: Color.colorDarkslategray_100,
+    lineHeight: 60,
+    fontSize: FontSize.size_31xl,
+    top: 236,
+    left: "50%",
+    textAlign: "left",
+    fontFamily: FontFamily.body1,
+    fontWeight: "700",
+    position: "absolute",
+  },
+  navigationIconFlexBox: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  labelTypo: {
+    marginTop: 8,
+    fontFamily: FontFamily.singleLineBodySmallStrong,
+    fontWeight: "600",
+    lineHeight: 14,
+    fontSize: FontSize.bodyForm_size,
+    textAlign: "center",
+  },
+  property1controlScreenOffChild: {
+    top: -21,
+    left: 58,
+    width: 317,
+    height: 214,
+    display: "none",
+    position: "absolute",
+  },
+  border: {
+    right: 2,
+    borderRadius: 3,
+    borderColor: Color.palettesNeutralVariant0,
+    width: 22,
+    opacity: 0.35,
+    borderStyle: "solid",
+    height: 11,
+    top: 0,
+    position: "absolute",
+    borderWidth: 1,
+  },
+  capIcon: {
+    top: 4,
+    right: 0,
+    width: 1,
+    height: 4,
+    position: "absolute",
+  },
+  capacity: {
+    top: 2,
+    right: 4,
+    borderRadius: 1,
+    backgroundColor: Color.palettesNeutralVariant0,
+    width: 18,
+    height: 7,
+    position: "absolute",
+  },
+  battery: {
+    top: 17,
+    right: 15,
+    height: 11,
+    width: 24,
+    position: "absolute",
+  },
+  wifiIcon: {
+    width: 15,
+    height: 11,
+  },
+  cellularConnectionIcon: {
+    width: 17,
+    height: 11,
+  },
+  time: {
+    marginTop: -3.5,
+    top: "50%",
+    fontSize: FontSize.size_mini,
+    letterSpacing: 0,
+    fontFamily: FontFamily.sFProDisplay,
+    color: Color.palettesNeutralVariant0,
+    textAlign: "center",
+    left: 0,
+    width: 54,
+    position: "absolute",
+  },
+  timeStyle: {
+    top: 7,
+    left: 21,
+    height: 21,
+    width: 54,
+    position: "absolute",
+  },
+  status: {
+    left: 1,
+    width: 374,
+    height: 44,
+    top: 0,
+    position: "absolute",
+  },
+  turnedOff: {
+    color: Color.colorDarkred,
+  },
+  turnedOffWrapper: {
+    backgroundColor: Color.colorWhitesmoke,
+    height: 65,
+    width: 349,
+    borderRadius: Border.br_16xl,
+    left: 12,
+    top: 439,
+    paddingHorizontal: Padding.p_126xl,
+    position: "absolute",
+  },
+  property1controlScreenOffItem: {
+    left: 26,
+  },
+  ellipseIcon: {
+    top: 152,
+    left: 74,
+    width: 229,
+    height: 229,
+  },
+  text: {
+    marginLeft: -43.5,
+  },
+  rectangleView: {
+    top: 547,
+    borderColor: Color.colorGoldenrod_200,
+    height: 88,
+    left: 0,
+    borderStyle: "solid",
+    width: 375,
+    backgroundColor: Color.colorGold_100,
+    position: "absolute",
+    borderWidth: 1,
+  },
+  data: {
+    lineHeight: 17,
+    color: Color.colorWhitesmoke,
+    fontSize: FontSize.bodyForm_size,
+    textAlign: "left",
+    fontFamily: FontFamily.body1,
+    fontWeight: "700",
+  },
+  dataWrapper: {
+    top: 552,
+    left: 22,
+    backgroundColor: Color.schemesPrimary,
+    paddingVertical: Padding.p_3xs,
+    paddingHorizontal: Padding.p_126xl,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    overflow: "hidden",
+  },
+  homeIcon: {
+    height: 24,
+    width: 24,
+    overflow: "hidden",
+  },
+  label: {
+    color: Color.textDefaultSecondary,
+    display: "none",
+  },
+  navigationButton: {
+    paddingHorizontal: StyleVariable.space200,
+    paddingVertical: Padding.p_base,
+  },
+  navigationIcon: {
+    paddingHorizontal: Padding.p_4xs,
+    paddingVertical: Padding.p_xs,
+  },
+  label2: {
+    color: Color.schemesOnSurfaceVariant,
+  },
+  navigationButton2: {
+    alignSelf: "stretch",
+    height: 68,
+    padding: StyleVariable.space200,
+  },
+  navigationIconParent: {
+    top: 689,
+    left: -1,
+    borderColor: Color.colorGoldenrod_100,
+    width: 376,
+    height: 92,
+    paddingHorizontal: Padding.p_23xl,
+    paddingVertical: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    borderStyle: "solid",
+    backgroundColor: Color.colorGold_100,
+    position: "absolute",
+    borderWidth: 1,
+  },
+  line: {
+    marginLeft: -67.5,
+    bottom: 8,
+    borderRadius: Border.br_81xl,
+    backgroundColor: Color.colorSilver_100,
+    width: 135,
+    height: 5,
+    left: "50%",
+    position: "absolute",
+  },
+  iphoneIndicator: {
+    bottom: 0,
+    left: -18,
+    width: 393,
+    height: 30,
+    position: "absolute",
+  },
+  property1controlScreenOff: {
+    left: 20,
+  },
+  turnedOn: {
+    color: Color.palettesSecondary100,
+  },
+  turnedOnWrapper: {
+    backgroundColor: Color.colorLimegreen_100,
+    height: 65,
+    width: 349,
+    borderRadius: Border.br_16xl,
+    left: 12,
+    top: 439,
+    paddingHorizontal: Padding.p_126xl,
+    position: "absolute",
+  },
+  property1controlScreenOnSInner: {
+    left: 294,
+  },
+  text1: {
+    marginLeft: -50.5,
+  },
+  property1controlScreenOnS: {
+    left: 435,
+  },
+  component1: {
+    borderRadius: Border.br_8xs,
+    borderStyle: "dashed",
+    borderColor: Color.colorBlueviolet,
+    width: 830,
+    height: 852,
+    overflow: "hidden",
+    borderWidth: 1,
+  },
+});
+
+export default Component;

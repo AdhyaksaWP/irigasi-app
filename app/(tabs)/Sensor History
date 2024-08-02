@@ -1,0 +1,1015 @@
+import * as React from "react";
+import { Image } from "expo-image";
+import { StyleSheet, View, Text, Pressable } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Color, Padding, FontFamily, FontSize, Border } from "../GlobalStyles";
+
+const ControlScreenOffState1 = () => {
+  const navigation = useNavigation();
+
+  return (
+    <View style={[styles.dataDanKalkulasi, styles.contentFlexBox]}>
+      <Image
+        style={styles.dataDanKalkulasiChild}
+        contentFit="cover"
+        source={require("../assets/vector-709.png")}
+      />
+      <View style={[styles.status, styles.statusPosition]}>
+        <View style={styles.battery}>
+          <View style={[styles.border, styles.borderBorder]} />
+          <Image
+            style={styles.capIcon}
+            contentFit="cover"
+            source={require("../assets/cap.png")}
+          />
+          <View style={styles.capacity} />
+        </View>
+        <Image
+          style={styles.wifiIcon}
+          contentFit="cover"
+          source={require("../assets/wifi1.png")}
+        />
+        <Image
+          style={styles.cellularConnectionIcon}
+          contentFit="cover"
+          source={require("../assets/cellular-connection.png")}
+        />
+        <View style={styles.timeStyle}>
+          <Text style={styles.time}>9:41</Text>
+        </View>
+      </View>
+      <View style={[styles.status, styles.statusPosition]}>
+        <View style={styles.battery}>
+          <View style={[styles.border, styles.borderBorder]} />
+          <Image
+            style={styles.capIcon}
+            contentFit="cover"
+            source={require("../assets/cap.png")}
+          />
+          <View style={styles.capacity} />
+        </View>
+        <Image
+          style={styles.wifiIcon}
+          contentFit="cover"
+          source={require("../assets/wifi1.png")}
+        />
+        <Image
+          style={styles.cellularConnectionIcon}
+          contentFit="cover"
+          source={require("../assets/cellular-connection.png")}
+        />
+        <View style={styles.timeStyle}>
+          <Text style={styles.time}>9:41</Text>
+        </View>
+      </View>
+      <View style={styles.list}>
+        <View style={[styles.listItem1, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>1</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={[styles.checkboxes, styles.checkboxesSpaceBlock]}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem1, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>2</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement1, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem1, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>3</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement1, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={styles.listItem4}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer6, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>A</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement3, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small1.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem5, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>A</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement3, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small1.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem5, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>A</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement3, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small1.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem1, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>4</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={[styles.checkboxes, styles.checkboxesSpaceBlock]}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem1, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>5</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={[styles.checkboxes, styles.checkboxesSpaceBlock]}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem5, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>A</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement3, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small1.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem1, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>6</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement1, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem5, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>A</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement3, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small1.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+        <View style={[styles.listItem1, styles.listItemFlexBox]}>
+          <View style={styles.stateLayerOverlay} />
+          <View style={[styles.stateLayer, styles.stateFlexBox]}>
+            <View style={styles.leadingElement}>
+              <View style={styles.buildingBlocksmonogram}>
+                <Text style={[styles.initial, styles.balikFlexBox]}>7</Text>
+              </View>
+            </View>
+            <View style={[styles.content, styles.contentFlexBox]}>
+              <Text style={[styles.overline, styles.supportingClr]}>
+                Overline
+              </Text>
+              <Text style={[styles.headline, styles.headlineTypo]}>
+                List item
+              </Text>
+              <Text style={[styles.supportingText, styles.headlineTypo]}>
+                Supporting line text lorem ipsum dolor sit amet, consectetur.
+              </Text>
+            </View>
+            <View style={[styles.trailingElement1, styles.wrapperFlexBox]}>
+              <Text
+                style={[styles.trailingSupportingText, styles.supportingClr]}
+              >
+                100+
+              </Text>
+              <View style={styles.checkboxesSpaceBlock}>
+                <View style={[styles.stateLayer1, styles.wrapperFlexBox]}>
+                  <View style={styles.container} />
+                  <Image
+                    style={[styles.checkSmallIcon, styles.linePosition]}
+                    contentFit="cover"
+                    source={require("../assets/check-small.png")}
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={styles.horizontalfullWidth}>
+            <View style={styles.divider} />
+          </View>
+        </View>
+      </View>
+      <View style={styles.frameParent}>
+        <View style={[styles.rumusWrapper, styles.wrapperFlexBox]}>
+          <Text style={[styles.rumus, styles.rumusTypo]}>Rumus</Text>
+        </View>
+        <Text style={[styles.dataYangDiberikan, styles.balikLayout]}>
+          Data yang Diberikan
+        </Text>
+      </View>
+      <Pressable
+        style={styles.dataDanKalkulasiInner}
+        onPress={() => navigation.navigate("Component1")}
+      >
+        <View style={[styles.balikWrapper, styles.wrapperFlexBox]}>
+          <Text style={[styles.balik, styles.balikLayout]}>Balik</Text>
+        </View>
+      </Pressable>
+      <Text style={[styles.text, styles.textTypo]}>12:00</Text>
+      <Text style={[styles.text1, styles.textTypo]}>12:30</Text>
+      <Text style={[styles.text2, styles.textTypo]}>13:00</Text>
+      <Text style={[styles.text3, styles.textTypo]}>13:30</Text>
+      <Text style={[styles.text4, styles.textTypo]}>14:00</Text>
+      <Text style={[styles.text5, styles.textTypo]}>14:30</Text>
+      <Text style={[styles.text6, styles.textTypo]}>15:00</Text>
+      <View style={styles.iphoneIndicator}>
+        <View style={[styles.line, styles.linePosition]} />
+      </View>
+      <View style={styles.iphoneIndicator}>
+        <View style={[styles.line, styles.linePosition]} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  contentFlexBox: {
+    flex: 1,
+    overflow: "hidden",
+  },
+  statusPosition: {
+    top: 0,
+    position: "absolute",
+  },
+  borderBorder: {
+    borderWidth: 1,
+    borderColor: Color.palettesNeutralVariant0,
+    borderStyle: "solid",
+  },
+  listItemFlexBox: {
+    minHeight: 56,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "stretch",
+  },
+  stateFlexBox: {
+    paddingVertical: Padding.p_5xs,
+    paddingHorizontal: Padding.p_base,
+    zIndex: 1,
+    flexDirection: "row",
+    height: 56,
+    alignItems: "center",
+    alignSelf: "stretch",
+  },
+  balikFlexBox: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  supportingClr: {
+    color: Color.schemesOnSurfaceVariant,
+    display: "none",
+  },
+  headlineTypo: {
+    fontFamily: FontFamily.m3BodyMedium,
+    textAlign: "left",
+    alignSelf: "stretch",
+  },
+  wrapperFlexBox: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  checkboxesSpaceBlock: {
+    marginLeft: 10,
+    paddingBottom: Padding.p_9xs,
+    paddingRight: Padding.p_9xs,
+    paddingTop: Padding.p_9xs,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  linePosition: {
+    left: "50%",
+    position: "absolute",
+  },
+  rumusTypo: {
+    fontFamily: FontFamily.body1,
+    fontWeight: "700",
+  },
+  balikLayout: {
+    lineHeight: 14,
+    textAlign: "center",
+  },
+  textTypo: {
+    left: 319,
+    fontFamily: FontFamily.m3BodyMedium,
+    textAlign: "left",
+    letterSpacing: 1,
+    lineHeight: 24,
+    fontSize: FontSize.heading2_size,
+    color: Color.palettesNeutralVariant0,
+    position: "absolute",
+  },
+  dataDanKalkulasiChild: {
+    top: -21,
+    left: 58,
+    width: 317,
+    height: 214,
+    display: "none",
+    position: "absolute",
+  },
+  border: {
+    right: 2,
+    borderRadius: 3,
+    width: 22,
+    opacity: 0.35,
+    height: 11,
+    top: 0,
+    position: "absolute",
+  },
+  capIcon: {
+    top: 4,
+    right: 0,
+    width: 1,
+    height: 4,
+    position: "absolute",
+  },
+  capacity: {
+    top: 2,
+    right: 4,
+    borderRadius: 1,
+    backgroundColor: Color.palettesNeutralVariant0,
+    height: 7,
+    width: 18,
+    position: "absolute",
+  },
+  battery: {
+    top: 17,
+    right: 15,
+    height: 11,
+    width: 24,
+    position: "absolute",
+  },
+  wifiIcon: {
+    width: 15,
+    height: 11,
+  },
+  cellularConnectionIcon: {
+    width: 17,
+    height: 11,
+  },
+  time: {
+    marginTop: -3.5,
+    fontSize: FontSize.size_mini,
+    fontFamily: FontFamily.sFProDisplay,
+    textAlign: "center",
+    color: Color.palettesNeutralVariant0,
+    letterSpacing: 0,
+    left: 0,
+    top: "50%",
+    width: 54,
+    position: "absolute",
+  },
+  timeStyle: {
+    top: 7,
+    left: 21,
+    height: 21,
+    width: 54,
+    position: "absolute",
+  },
+  status: {
+    left: 1,
+    width: 374,
+    height: 44,
+  },
+  stateLayerOverlay: {
+    height: "100%",
+    top: "0%",
+    right: "0%",
+    bottom: "0%",
+    left: "0%",
+    zIndex: 0,
+    position: "absolute",
+    width: "100%",
+  },
+  initial: {
+    marginTop: -20,
+    marginLeft: -20,
+    color: Color.schemesOnPrimaryContainer,
+    fontFamily: FontFamily.m3LabelSmall,
+    fontWeight: "500",
+    lineHeight: 24,
+    display: "flex",
+    fontSize: FontSize.heading2_size,
+    left: "50%",
+    height: 40,
+    width: 40,
+    textAlign: "center",
+    letterSpacing: 0,
+    top: "50%",
+    position: "absolute",
+  },
+  buildingBlocksmonogram: {
+    backgroundColor: Color.schemesPrimaryContainer,
+    height: 40,
+    width: 40,
+    borderRadius: Border.br_81xl,
+    overflow: "hidden",
+  },
+  leadingElement: {
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  overline: {
+    textAlign: "left",
+    lineHeight: 16,
+    color: Color.schemesOnSurfaceVariant,
+    letterSpacing: 1,
+    fontFamily: FontFamily.m3LabelSmall,
+    fontWeight: "500",
+    fontSize: FontSize.body1_size,
+    alignSelf: "stretch",
+  },
+  headline: {
+    color: Color.schemesOnSurface,
+    letterSpacing: 1,
+    fontFamily: FontFamily.m3BodyMedium,
+    lineHeight: 24,
+    fontSize: FontSize.heading2_size,
+  },
+  supportingText: {
+    lineHeight: 20,
+    fontSize: FontSize.bodyForm_size,
+    color: Color.schemesOnSurfaceVariant,
+    display: "none",
+    fontFamily: FontFamily.m3BodyMedium,
+    letterSpacing: 0,
+  },
+  content: {
+    marginLeft: 16,
+    justifyContent: "center",
+    alignSelf: "stretch",
+    overflow: "hidden",
+  },
+  trailingSupportingText: {
+    fontSize: FontSize.m3LabelSmall_size,
+    textAlign: "right",
+    lineHeight: 16,
+    color: Color.schemesOnSurfaceVariant,
+    letterSpacing: 1,
+    fontFamily: FontFamily.m3LabelSmall,
+    fontWeight: "500",
+  },
+  container: {
+    borderRadius: Border.br_11xs,
+    backgroundColor: Color.schemesPrimary,
+    height: 18,
+    zIndex: 0,
+    width: 18,
+  },
+  checkSmallIcon: {
+    marginTop: -12,
+    marginLeft: -12,
+    height: 24,
+    zIndex: 1,
+    top: "50%",
+    left: "50%",
+    width: 24,
+  },
+  stateLayer1: {
+    padding: Padding.p_2xs,
+    borderRadius: Border.br_81xl,
+    justifyContent: "center",
+  },
+  checkboxes: {
+    display: "none",
+  },
+  trailingElement: {
+    width: 44,
+    height: 48,
+    marginLeft: 16,
+  },
+  stateLayer: {
+    zIndex: 1,
+  },
+  divider: {
+    borderColor: Color.schemesOutlineVariant,
+    borderTopWidth: 1,
+    height: 1,
+    alignSelf: "stretch",
+    borderStyle: "solid",
+  },
+  horizontalfullWidth: {
+    zIndex: 2,
+    justifyContent: "center",
+    alignSelf: "stretch",
+    display: "none",
+  },
+  listItem1: {
+    borderWidth: 1,
+    borderColor: Color.palettesNeutralVariant0,
+    borderStyle: "solid",
+  },
+  trailingElement1: {
+    marginLeft: 16,
+    display: "none",
+  },
+  trailingElement3: {
+    marginLeft: 16,
+  },
+  stateLayer6: {
+    zIndex: 1,
+    display: "none",
+  },
+  listItem4: {
+    height: 56,
+    minHeight: 56,
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "stretch",
+    display: "none",
+  },
+  listItem5: {
+    display: "none",
+  },
+  list: {
+    top: 169,
+    backgroundColor: "#f9cb28",
+    borderColor: Color.colorDarkslategray_100,
+    width: 375,
+    left: 0,
+    borderWidth: 1,
+    borderStyle: "solid",
+    position: "absolute",
+  },
+  rumus: {
+    lineHeight: 19,
+    textAlign: "left",
+    fontSize: FontSize.heading2_size,
+    fontFamily: FontFamily.body1,
+    fontWeight: "700",
+    color: Color.palettesNeutralVariant0,
+  },
+  rumusWrapper: {
+    top: 16,
+    left: 23,
+    position: "absolute",
+  },
+  dataYangDiberikan: {
+    top: 63,
+    left: 31,
+    fontWeight: "600",
+    fontFamily: FontFamily.singleLineBodySmallStrong,
+    width: 318,
+    height: 101,
+    fontSize: FontSize.bodyForm_size,
+    color: Color.palettesNeutralVariant0,
+    lineHeight: 14,
+    position: "absolute",
+  },
+  frameParent: {
+    top: 561,
+    left: -6,
+    shadowColor: "rgba(0, 0, 0, 0)",
+    shadowOffset: {
+      width: 37,
+      height: -70,
+    },
+    shadowRadius: 22,
+    elevation: 22,
+    shadowOpacity: 1,
+    borderTopLeftRadius: Border.br_3xs,
+    borderTopRightRadius: Border.br_3xs,
+    backgroundColor: Color.palettesSecondary100,
+    width: 402,
+    height: 251,
+    position: "absolute",
+  },
+  balik: {
+    color: Color.palettesSecondary100,
+    width: 30,
+    fontFamily: FontFamily.body1,
+    fontWeight: "700",
+    fontSize: FontSize.body1_size,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  balikWrapper: {
+    borderRadius: Border.br_3xs,
+    backgroundColor: Color.colorMediumseagreen,
+    height: 34,
+    paddingHorizontal: Padding.p_110xl,
+    paddingVertical: Padding.p_9xs,
+    justifyContent: "center",
+    alignSelf: "stretch",
+    overflow: "hidden",
+  },
+  dataDanKalkulasiInner: {
+    top: 743,
+    left: 14,
+    width: 330,
+    position: "absolute",
+  },
+  text: {
+    top: 186,
+  },
+  text1: {
+    top: 241,
+  },
+  text2: {
+    top: 296,
+  },
+  text3: {
+    top: 353,
+  },
+  text4: {
+    top: 409,
+  },
+  text5: {
+    top: 465,
+  },
+  text6: {
+    top: 521,
+  },
+  line: {
+    marginLeft: -67.5,
+    bottom: 8,
+    backgroundColor: Color.colorSilver_100,
+    width: 135,
+    height: 5,
+    borderRadius: Border.br_81xl,
+  },
+  iphoneIndicator: {
+    bottom: 0,
+    left: -18,
+    width: 393,
+    height: 30,
+    position: "absolute",
+  },
+  dataDanKalkulasi: {
+    borderRadius: Border.br_11xl,
+    backgroundColor: Color.colorGold_100,
+    height: 812,
+    overflow: "hidden",
+    width: "100%",
+  },
+});
+
+export default ControlScreenOffState1;

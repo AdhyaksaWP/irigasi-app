@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         primary: "#F9C405",
         secondary: "#05BF44",
+        tertiary: "#65558F",
       },
       fontFamily: {
         NSLight: ["NunitoSans-Light", "sans-serif"],

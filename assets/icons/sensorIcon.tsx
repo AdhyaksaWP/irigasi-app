@@ -1,9 +1,10 @@
 import * as React from "react";
 import Svg, { Path } from "react-native-svg";
-const SensorIcon = ({color, ...props}) => (
+
+const SensorIcon = ({color, width, height, ...props}) => (
   <Svg
-    width={24}
-    height={22}
+    width={width? width : 24}
+    height={height? height : 22}
     viewBox="0 0 24 22"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

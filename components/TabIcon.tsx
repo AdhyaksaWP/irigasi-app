@@ -1,4 +1,3 @@
-// TabIcon.tsx
 import React from 'react';
 import { View, Text, Image, ImageSourcePropType } from 'react-native';
 import icons from '@/constants/icons';
@@ -11,14 +10,14 @@ interface TabIconProps {
 }
 
 const TabIcon: React.FC<TabIconProps> = ({ source, color, name, focused }) => {
-  const IconSource = icons[source]; // Dynamically select the component or image path
+  const IconSource = icons[source]; 
 
   return (
     <View className={`items-center justify-center gap-1 ${focused ? 'pb-4' : ''}`}>
       {typeof IconSource === 'string' ? (
         <Image source={IconSource as ImageSourcePropType} style={{ tintColor: color, width: 24, height: 24 }} />
       ) : (
-        <IconSource color={color} /> // Assuming the icon component accepts a color prop
+        <IconSource color={color} />
       )}
       
       <Text className = 'font-NSMedium text-[#49454F]'>

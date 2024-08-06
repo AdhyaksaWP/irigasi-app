@@ -1,30 +1,19 @@
-import { useMemo, useState, useEffect } from "react";
-import { PermissionsAndroid, Platform, Alert, Linking } from "react-native";
-import { BleError, BleManager, Characteristic, Device } from "react-native-ble-plx";
-import * as ExpoDevice from "expo-device";
+import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
+import { PermissionsAndroid, Platform, Alert, Linking } from 'react-native';
+import { BleManager, BleError, Characteristic, Device } from 'react-native-ble-plx';
+import * as ExpoDevice from 'expo-device';
+import base64 from 'react-native-base64';
 
-import base64 from "react-native-base64";
-import bleManagerInstance from "./BleManagerSingleton";
+const BleManagerContext = createContext();
 
 const SERVICE_UUID        = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
 const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
-export interface BluetoothLowEnergyApi {
-    requestPermissions(): Promise<boolean>;
-    scanForPeripherals(): void;
-    allDevices: Device[];
-    connectToDevice: (deviceId: Device) => Promise<void>;
-    connectedDevice: Device | null;
-    checkConnectionStatus: () => boolean;
-    sensorIrigasi: number[];
-}
-
-function useBLE(): BluetoothLowEnergyApi {    
-    // const bleManager = useMemo(() => new BleManager(), []);
-    const bleManager = bleManagerInstance;
-    const [allDevices, setAllDevices] = useState<Device[]>([]);
-    const [connectedDevice, setConnectedDevice] = useState<Device | null>(null);
-    const [sensorIrigasi, setSensorIrigasi] = useState<number[]>([]);
+const BleManagerProvider = ({ children }) => {
+    const bleManager = useMemo(() => new BleManager(), []);
+    const [allDevices, setAllDevices] = useState([]);
+    const [connectedDevice, setConnectedDevice] = useState(null);
+    const [sensorIrigasi, setSensorIrigasi] = useState([]);
 
     const requestAndroid31Permissions = async () => {
         try {
@@ -132,7 +121,7 @@ function useBLE(): BluetoothLowEnergyApi {
         }
     };
 
-    const isDuplicateDevice = (devices: Device[], nextDevice: Device) =>
+    const isDuplicateDevice = (devices, nextDevice) =>
         devices.findIndex((device) => nextDevice.id === device.id) > -1;
 
     const scanForPeripherals = () => {
@@ -142,8 +131,6 @@ function useBLE(): BluetoothLowEnergyApi {
                 return;
             }
             if (device) {
-                // console.log("Found device", device.id, device.name);
-
                 setAllDevices((prevState) => {
                     if (!isDuplicateDevice(prevState, device)) {
                         return [...prevState, device];
@@ -160,7 +147,7 @@ function useBLE(): BluetoothLowEnergyApi {
         }
     }, []);
 
-    const connectToDevice = async (device: Device) => {
+    const connectToDevice = async (device) => {
         try {
             const deviceConnection = await bleManager.connectToDevice(device.id);
             setConnectedDevice(deviceConnection);
@@ -177,13 +164,27 @@ function useBLE(): BluetoothLowEnergyApi {
         return connectedDevice !== null;
     };
 
-    const parseCSV = (data: string) => {
+    const parseCSV = (data) => {
         return data.split(',').map(value => parseFloat(value.trim()));
     };
+
+    const averageReadings = (data) => {
+        let total = 0;
+        let numberofNaN = 0;
+        for (let i = 0; i<data.length; i++){
+            if (!isNaN(data[i])) {
+                total += data[i];
+            }
+            else {
+                numberofNaN++;
+            }
+        }
+        return total/(data.length - numberofNaN);
+    }
     
     const onSensorIrigasiUpdate = (
-        error: BleError | null,
-        characteristic: Characteristic | null,
+        error,
+        characteristic,
     ) => {
         if (error) {
             console.log(error);
@@ -195,9 +196,10 @@ function useBLE(): BluetoothLowEnergyApi {
         const rawData = base64.decode(characteristic.value);
         try {
             const sensorValues = parseCSV(rawData);
-            setSensorIrigasi(sensorValues);
+            const averageValue = averageReadings(sensorValues);
+            const updatedSensorValues = sensorValues.concat(averageValue);
+            setSensorIrigasi(updatedSensorValues);
             console.log("Received Sensor Values:", sensorValues);
-            // console.log("Hello from sensorIrigasi", sensorIrigasi);
         } catch (e) {
             console.error("Error decoding or processing raw data:", e);
         }
@@ -207,29 +209,35 @@ function useBLE(): BluetoothLowEnergyApi {
         console.log("Updated Sensor Irigasi:", sensorIrigasi);
     }, [sensorIrigasi]);
 
-    const startStreamingData = async (device: Device) => {
+    const startStreamingData = async (device) => {
         if (device) {
             device.monitorCharacteristicForService(
                 SERVICE_UUID,
                 CHARACTERISTIC_UUID,
                 onSensorIrigasiUpdate
             )
-            
         } else {
             console.log("No device connected");
-            
         }
     }
 
-    return {
-        scanForPeripherals,
-        requestPermissions,
-        allDevices,
-        connectToDevice,
-        connectedDevice,
-        checkConnectionStatus,
-        sensorIrigasi,
-    };
-}
+    return (
+        <BleManagerContext.Provider value={{
+            scanForPeripherals,
+            requestPermissions,
+            allDevices,
+            connectToDevice,
+            connectedDevice,
+            checkConnectionStatus,
+            sensorIrigasi,
+        }}>
+            {children}
+        </BleManagerContext.Provider>
+    );
+};
 
-export default useBLE;
+const useBleManager = () => {
+    return useContext(BleManagerContext);
+};
+
+export { BleManagerProvider, useBleManager };

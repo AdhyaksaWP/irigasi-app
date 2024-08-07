@@ -14,7 +14,8 @@ const TabIcon: React.FC<TabIconProps> = ({ source, color, name, focused }) => {
 
   return (
     <View className={`items-center justify-center gap-1 ${focused ? 'pb-4' : ''}`}>
-      {typeof IconSource === 'string' ? (
+      {typeof 
+      IconSource === 'string' ? (
         <Image source={IconSource as ImageSourcePropType} style={{ tintColor: color, width: 24, height: 24 }} />
       ) : (
         <IconSource color={color} />

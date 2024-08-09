@@ -19,7 +19,7 @@ const Sensors: FC = () => {
     const { sensorIrigasi } = useBleManager();
     const [sensorData, setSensorData] = useState<{ title: string, data: number }[]>([]);
 
-    console.log("Calling From Sensors.tsx:", sensorIrigasi);
+    // console.log("Calling From Sensors.tsx:", sensorIrigasi);
     useEffect(() => {
         console.log("Calling From Sensors.tsx:", sensorIrigasi);
         console.log("Sensor Data before update:", sensorData);

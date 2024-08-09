@@ -7,7 +7,15 @@ import CustomButton from '@/components/custombutton';
 import BluetoothIcon from '@/assets/icons/bluetoothIcon';
 
 const Bluetooth = () => {
-    const { requestPermissions, scanForPeripherals, allDevices, connectToDevice, connectedDevice, checkConnectionStatus, sensorIrigasi } = useBleManager();
+    const { 
+        requestPermissions, 
+        scanForPeripherals, 
+        allDevices, 
+        connectToDevice, 
+        connectedDevice, 
+        checkConnectionStatus, 
+        sensorIrigasi, 
+        disconnectFromDevice } = useBleManager();
     const [isScanning, setIsScanning] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
 
@@ -53,9 +61,9 @@ const Bluetooth = () => {
                 />
 
                 <CustomButton
-                    title='Turn on Bluetooth'
-                    handlePress={scanForDevices}
-                    containerStyles='bg-tertiary w-44 h-10 rounded-3xl items-center justify-center mt-10'
+                    title={connectedDevice? 'Disconnect' : 'Turn on Bluetooth'}
+                    handlePress={connectedDevice? disconnectFromDevice : scanForDevices}
+                    containerStyles={`${connectedDevice? 'bg-red-500' : 'bg-tertiary'} ' w-52 h-10 rounded-3xl items-center justify-center mt-10'`}
                     textStyles='font-NSBold text-white text-sm'
                 />        
                 {isScanning && <Text>Scanning for devices...</Text>}

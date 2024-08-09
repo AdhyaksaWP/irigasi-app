@@ -142,9 +142,7 @@ const BleManagerProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (Platform.OS === 'android' && (ExpoDevice.platformApiLevel ?? -1) >= 31) {
-            checkBluetoothState();
-        }
+        checkBluetoothState();
     }, []);
 
     const connectToDevice = async (device) => {
@@ -221,6 +219,14 @@ const BleManagerProvider = ({ children }) => {
         }
     }
 
+    const disconnectFromDevice = () => {
+        if (connectedDevice){
+            bleManager.cancelDeviceConnection(connectedDevice.id);
+            setConnectedDevice(null);
+            setSensorIrigasi([]);
+        }
+    }
+
     return (
         <BleManagerContext.Provider value={{
             scanForPeripherals,
@@ -230,6 +236,7 @@ const BleManagerProvider = ({ children }) => {
             connectedDevice,
             checkConnectionStatus,
             sensorIrigasi,
+            disconnectFromDevice
         }}>
             {children}
         </BleManagerContext.Provider>

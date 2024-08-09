@@ -30,11 +30,17 @@ const SignIn = () => {
     try {
       await signIn(email, password);
       const result = await getCurrentUser();
-      setUser(result);
-      setIsLoggedIn(true);
 
-      Alert.alert("Sukses")
-      router.replace('/home');
+      if (!result) {
+        throw new Error("Failed to fetch user data after sign-in");
+      } 
+      else {
+        setUser(result);
+        setIsLoggedIn(true);
+
+        Alert.alert("Sukses");
+        router.replace('/home');
+      }
     } catch (error) {
       Alert.alert('Error', error.message);
     } finally {

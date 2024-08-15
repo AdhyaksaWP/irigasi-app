@@ -11,4 +11,11 @@ declare module 'react-native-base64' {
     export function encodeFromByteArray(input: number[]): string;
     export function decode(input: string): string;
   }
+  declare module '@env' {
+    export const MAP_GEO_API_SECRET: string;
+    export const APPWRITE_PROJECTID: string;
+    export const APPWRITE_DATABASEID: string;
+    export const APPWRITE_USECOLLECTIONID: string;
+    export const APPWRITE_STORAGEID: string;
+  }
   

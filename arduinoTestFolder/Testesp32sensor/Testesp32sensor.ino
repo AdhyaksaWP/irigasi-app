@@ -9,7 +9,7 @@ BLECharacteristic *pCharacteristic;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("Starting BLE work!");
+  Serial.println("63,4549,464,056,457,5845");
 
   BLEDevice::init("ESP32_Irrigation_Sensor");
   BLEServer *pServer = BLEDevice::createServer();

@@ -1,16 +1,17 @@
 
 import { Client, Account, ID, Databases, Query } from 'react-native-appwrite';
 import { Alert } from 'react-native';
+import { APPWRITE_PROJECTID, APPWRITE_DATABASEID, APPWRITE_STORAGEID, APPWRITE_USECOLLECTIONID } from '@env';
 // Init your React Native SDK
 
 
 export const appwriteConfig = {
     endpoint: 'https://cloud.appwrite.io/v1',
     platform: 'com.app.irigasi',
-    projectId: '66aa29f6000e2687dc7c',
-    databaseId: '66aa2c51001bfcc8db55',
-    useCollectionId: '66aa2c8d003e5b5d83ed',
-    storageId: '66aa2dea0032544d84bc',
+    projectId: APPWRITE_PROJECTID,
+    databaseId: APPWRITE_DATABASEID,
+    useCollectionId: APPWRITE_USECOLLECTIONID,
+    storageId: APPWRITE_STORAGEID,
 }
 
 const client = new Client();

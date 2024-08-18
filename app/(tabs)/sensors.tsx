@@ -24,7 +24,7 @@ const Sensors: FC = () => {
         console.log("Calling From Sensors.tsx:", sensorIrigasi);
         console.log("Sensor Data before update:", sensorData);
         if (sensorIrigasi.length > 0) {
-            const formattedData = sensorIrigasi.map((value, index) => ({
+            const formattedData = sensorIrigasi.map((value: number, index: number) => ({
                 title: index === sensorIrigasi.length - 1 ? 'Average' : `Sensor ${index + 1}`,
                 data: value,
             }));

@@ -1,82 +1,84 @@
 import React, { useState, useEffect } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView, Text, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from 'react-native-maps';
 import CustomButton from '@/components/custombutton';
 import * as Location from 'expo-location';
 import { useBleManager } from '@/context/BLEContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAreaOfPolygon } from 'geolib'; // Import the geolib function to calculate area
 
 const zoomLevel = 17;
 const latitudeDelta = Math.exp(Math.log(360) - zoomLevel * Math.LN2);
 const longitudeDelta = latitudeDelta;
 
 const Pupuk = () => {
-  const [mapRegion, setMapRegion] = useState({
+  const [mapRegion, setMapRegion] = useState([{
     latitude: -7.887,
     longitude: 110.211,
     latitudeDelta: latitudeDelta,
     longitudeDelta: longitudeDelta,
-  });
-  const [currentLocation, setCurrentLocation] = useState<Location.LocationObjectCoords | null>(null);
+  }]);
   const { sensorIrigasi } = useBleManager();
-  const [sensorData, setSensorData] = useState();
+  const [sensorData, setSensorData] = useState<String>();
+  const [selectedMarkerIndex, setSelectedMarkerIndex] = useState<number | null>(null);
+  const [drawingMode, setDrawingMode] = useState<Boolean>(false);
+  const [polygonCoordinates, setPolygonCoordinates] = useState<any[]>([]);
 
   const handleRegionChange = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
+    console.log(status);
+    
     if (status !== "granted") {
       console.log("Permission to access location was denied");
       return;
     }
 
     let location = await Location.getCurrentPositionAsync({});
-    setCurrentLocation(location.coords);
-
-    setMapRegion({
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-      latitudeDelta: 0.005,
-      longitudeDelta: 0.005,
-    });
+    console.log(location);
+    
+    setMapRegion(prevMapRegion => [
+      ...prevMapRegion,
+      {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+      }
+    ]);
 
     if (sensorIrigasi.length > 0) {
-      setSensorData(sensorIrigasi[sensorIrigasi.length - 1]);
+      setSensorData((String(sensorIrigasi).replace(',', '\n')));
     }
   };
 
-  useEffect(() => {
-    const saveSensorData = async () => {
-      if (sensorData !== undefined) {
-        try {
-          const storedReadingsJson = await AsyncStorage.getItem('readings');
-          const storedReadings = storedReadingsJson ? JSON.parse(storedReadingsJson) : [];
-
-          if (storedReadings.length >= 3) {
-            storedReadings.shift();
-          }
-
-          storedReadings.push(sensorData);
-
-          await AsyncStorage.setItem('readings', JSON.stringify(storedReadings));
-
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-
-    saveSensorData();
-  }, [sensorData]); 
-
-  const getLastRecappedReadings = async () => {
-    try {
-      const storedReadingsJson = await AsyncStorage.getItem('readings');
-      const storedReadings = storedReadingsJson ? JSON.parse(storedReadingsJson) : [];
-      console.log(storedReadings);
-    } catch (error) {
-      console.log(error);
+  const handleMapPress = (e: any) => {
+    if (drawingMode) {
+      const newCoordinate = e.nativeEvent.coordinate;
+      setPolygonCoordinates(prevCoordinates => [...prevCoordinates, newCoordinate]);
     }
   };
+
+  const handleCekLuasArea = () => {
+    setDrawingMode(!drawingMode);
+
+    if (!drawingMode && polygonCoordinates.length > 2) {
+      const area = getAreaOfPolygon(polygonCoordinates);
+      Alert.alert('Luas Area', `Luas area yang dipilih adalah: ${area.toFixed(2)} m²`);
+    }
+  };
+
+  const handleDeleteMarker = () => {
+    if (selectedMarkerIndex !== null) {
+      const updatedMarkers = mapRegion.filter((_, index) => index !== selectedMarkerIndex);
+      setMapRegion(updatedMarkers);
+      setSelectedMarkerIndex(null); // Reset after deletion
+    }
+  };
+
+  const handleRemoveArea = () => {
+    setPolygonCoordinates([]);
+  }
 
   return (
     <SafeAreaView className='h-full bg-primary flex-1'>
@@ -89,34 +91,75 @@ const Pupuk = () => {
           <MapView
             provider={PROVIDER_GOOGLE}
             className='w-full h-1/2'
-            region={mapRegion}
-            onRegionChangeComplete={region => setMapRegion(region)}
+            region={mapRegion[0]} 
+            onPress={handleMapPress} // Handle map press to add polygon points
           >
-            {currentLocation && (
+            {mapRegion.length > 1 && mapRegion.map((value, index) => (
               <Marker
+                key={index}
                 coordinate={{
-                  latitude: currentLocation.latitude,
-                  longitude: currentLocation.longitude,
+                  latitude: value.latitude,
+                  longitude: value.longitude
                 }}
-                title={String(sensorData)}
+                title={`Area ${index}`}
+                description={`${sensorData}`}
+                onPress={() => {
+                  setSelectedMarkerIndex(index); 
+                }}
+              />
+            ))}
+            
+            {polygonCoordinates.length > 0 && (
+              <Polygon
+                coordinates={polygonCoordinates}
+                fillColor="rgba(0, 200, 0, 0.3)"
+                strokeColor="rgba(0,0,0,0.5)"
               />
             )}
           </MapView>
+
           <View className='bg-white shadow-[rgba(0,0,15,0.5)_0px_-10px_10px_0px] h-1/2'>
             <Text className='font-NSBold p-5'>Sesi</Text>
-            <View className='w-full items-center gap-y-4'>
-              <CustomButton
-                title="Rekap Sesi"
-                handlePress={handleRegionChange}
-                containerStyles={'bg-red-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
-                textStyles={'font-NSBold text-white text-sm'}
-              />
-              <CustomButton
-                title="Riwayat Sesi"
-                handlePress={getLastRecappedReadings}
-                containerStyles={'bg-green-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
-                textStyles={'font-NSBold text-white text-sm'}
-              />
+            <View className='w-full items-center gap-y-8'>
+              {selectedMarkerIndex === null && (
+                <>
+                  <CustomButton
+                    title="Rekap Sesi"
+                    handlePress={handleRegionChange}
+                    containerStyles={'bg-green-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    textStyles={'font-NSBold text-white text-sm'}
+                  />
+                  <CustomButton
+                    title={drawingMode ? "Selesai Menggambar" : "Cek Luas Area"}
+                    handlePress={handleCekLuasArea} // Toggle drawing mode and calculate area
+                    containerStyles={'bg-purple-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    textStyles={'font-NSBold text-white text-sm'}
+                  />
+                  <CustomButton
+                    title="Hapus Area"
+                    handlePress={handleRemoveArea} // Toggle drawing mode and calculate area
+                    containerStyles={'bg-red-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    textStyles={'font-NSBold text-white text-sm'}
+                  />
+                </>
+              )}
+
+              {selectedMarkerIndex !== null && (
+                <>
+                  <CustomButton
+                    title="Hapus Marker"
+                    handlePress={handleDeleteMarker}
+                    containerStyles={'bg-red-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    textStyles={'font-NSBold text-white text-sm'}
+                  />
+                  <CustomButton
+                    title="Balik"
+                    handlePress={() => setSelectedMarkerIndex(null)}
+                    containerStyles={'bg-green-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    textStyles={'font-NSBold text-white text-sm'}
+                  />
+                </>
+              )}
             </View>
           </View>
         </View>

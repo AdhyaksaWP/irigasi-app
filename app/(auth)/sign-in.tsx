@@ -63,6 +63,7 @@ const SignIn = () => {
             })}
             otherStyles="mt-20"
             keyboardtype="email-address"
+            placeholder="Email"
           />
           <FormField
             title="Kata Sandi"
@@ -72,6 +73,7 @@ const SignIn = () => {
             })}
             otherStyles="mt-4"
             keyboardtype="password"
+            placeholder="Kata Sandi"
           />
           <Text className='font-PTSRegular text-right my-3'>Lupa Kata Sandi?</Text>
         </View>

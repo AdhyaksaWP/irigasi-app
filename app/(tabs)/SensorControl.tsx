@@ -1,97 +1,92 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Switch } from 'react-native';
+import * as Progress from 'react-native-progress';
+import CustomButton from './CustomButton'; // Assuming you have this component
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 
-type Props = {
-  title: string;
-  connected: boolean;
-  onToggle: () => void;
+const SensorScreen = () => {
+    const [isEnabled, setIsEnabled] = useState(false);
+    const [progress, setProgress] = useState(0.05); // Initial progress
+
+    const toggleSwitch = () => {
+        setIsEnabled(previousState => !previousState);
+        setProgress(isEnabled ? 0.05 : 0.95); // Update progress based on the switch
+    };
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.title}>Kontrol Pompa</Text>
+            <Progress.Circle 
+                size={200} 
+                progress={progress} 
+                color={isEnabled ? '#00C853' : '#FF5252'} 
+                thickness={10} 
+                showsText 
+                textStyle={styles.progressText}
+                formatText={() => `${Math.round(progress * 100)} %`}
+            />
+            <Text style={styles.statusText}>Connecting / Running</Text>
+            <CustomButton
+                title={isEnabled ? 'TURNED ON' : 'TURNED OFF'}
+                handlePress={toggleSwitch}
+                containerStyles={`${isEnabled ? 'bg-green-500' : 'bg-red-500'} w-52 h-10 rounded-3xl items-center justify-center mt-10`}
+                textStyles='font-NSBold text-white text-sm'
+            />
+            <View style={styles.bottomNav}>
+                <Text style={styles.dataSensorButton}>Data Sensor</Text>
+            </View>
+        </SafeAreaView>
+    );
 };
 
-const SlidingButton: React.FC<Props> = ({ title, connected, onToggle }) => {
-  return (
-    <Pressable
-      onPress={onToggle}
-      style={[
-        styles.buttonContainer,
-        { backgroundColor: connected ? '#34C759' : '#FF3B30' },
-      ]}
-    >
-      <Text style={styles.buttonText}>{title}</Text>
-    </Pressable>
-  );
-};
+const Tab = createBottomTabNavigator();
 
-const SensorScreen: React.FC = () => {
-  const [connected, setConnected] = useState(false);
-
-  const handleToggle = () => {
-    setConnected((prev) => !prev);
-  };
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.circleContainer}>
-        <Text style={styles.circleText}>{connected ? '95%' : '5%'}</Text>
-      </View>
-      <SlidingButton
-        title={connected ? 'TURNED ON' : 'TURNED OFF'}
-        connected={connected}
-        onToggle={handleToggle}
-      />
-      <Pressable style={styles.dataButton}>
-        <Text style={styles.dataButtonText}>Data</Text>
-      </Pressable>
-    </View>
-  );
-};
+export default function App() {
+    return (
+        <NavigationContainer>
+            <Tab.Navigator>
+                <Tab.Screen name="Sensor" component={SensorScreen} />
+                {/* Other tabs */}
+            </Tab.Navigator>
+        </NavigationContainer>
+    );
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFD500',
-  },
-  circleContainer: {
-    width: 200,
-    height: 200,
-    borderRadius: 100,
-    backgroundColor: '#F2F2F2',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  circleText: {
-    fontSize: 48,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  buttonContainer: {
-    width: 250,
-    height: 50,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  dataButton: {
-    width: 150,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#6C63FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  dataButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#FFD54F',
+        paddingTop: 20,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    progressText: {
+        fontSize: 32,
+        fontWeight: 'bold',
+    },
+    statusText: {
+        fontSize: 18,
+        color: '#616161',
+        marginVertical: 10,
+    },
+    bottomNav: {
+        position: 'absolute',
+        bottom: 30,
+        width: '100%',
+        alignItems: 'center',
+    },
+    dataSensorButton: {
+        fontSize: 18,
+        backgroundColor: '#FFD700',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 25,
+        color: '#000',
+        fontWeight: 'bold',
+    },
 });
-
-export default SensorScreen;

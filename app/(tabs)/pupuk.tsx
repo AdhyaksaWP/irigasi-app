@@ -7,6 +7,7 @@ import * as Location from 'expo-location';
 import { useBleManager } from '@/context/BLEContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAreaOfPolygon } from 'geolib'; // Import the geolib function to calculate area
+import IconButton from '@/components/iconButton';
 
 const zoomLevel = 17;
 const latitudeDelta = Math.exp(Math.log(360) - zoomLevel * Math.LN2);
@@ -52,14 +53,14 @@ const Pupuk = () => {
     }
   };
 
-  const handleMapPress = (e: any) => {
+  const handleMapPress = async (e: any) => {
     if (drawingMode) {
       const newCoordinate = e.nativeEvent.coordinate;
       setPolygonCoordinates(prevCoordinates => [...prevCoordinates, newCoordinate]);
     }
   };
 
-  const handleCekLuasArea = () => {
+  const handleCekLuasArea = async () => {
     setDrawingMode(!drawingMode);
 
     if (!drawingMode && polygonCoordinates.length > 2) {
@@ -68,7 +69,7 @@ const Pupuk = () => {
     }
   };
 
-  const handleDeleteMarker = () => {
+  const handleDeleteMarker = async () => {
     if (selectedMarkerIndex !== null) {
       const updatedMarkers = mapRegion.filter((_, index) => index !== selectedMarkerIndex);
       setMapRegion(updatedMarkers);
@@ -76,21 +77,25 @@ const Pupuk = () => {
     }
   };
 
-  const handleRemoveArea = () => {
+  const handleRemoveArea = async () => {
     setPolygonCoordinates([]);
+  }
+
+  const handleCancelSelectMarker = async () => {
+    setSelectedMarkerIndex(null);
   }
 
   return (
     <SafeAreaView className='h-full bg-primary flex-1'>
       <ScrollView contentContainerStyle={{ height: '100%' }}>
         <View className='w-full h-full'>
-          <View className='w-full bg-white h-20 justify-center pl-5 border-b-4 border-b-gray-200'>
+          <View className='w-full bg-primary h-20 justify-center items-center border-b-4 border-b-gray-200'>
             <Text className='font-NSBold'>Map API Daerah</Text>
           </View>
 
           <MapView
             provider={PROVIDER_GOOGLE}
-            className='w-full h-1/2'
+            className='w-full h-2/3'
             region={mapRegion[0]} 
             onPress={handleMapPress} // Handle map press to add polygon points
           >
@@ -118,46 +123,101 @@ const Pupuk = () => {
             )}
           </MapView>
 
-          <View className='bg-white shadow-[rgba(0,0,15,0.5)_0px_-10px_10px_0px] h-1/2'>
-            <Text className='font-NSBold p-5'>Sesi</Text>
-            <View className='w-full items-center gap-y-8'>
+          <View className='bg-white shadow-[rgba(0,0,15,0.5)_0px_-10px_10px_0px] h-1/3'>
+            <View className='w-full items-center justify-center h-3/4 flex-row'>
               {selectedMarkerIndex === null && (
                 <>
-                  <CustomButton
+                    <IconButton
+                      source="RekapSesiIcon"
+                      color="rgb(34 197 94)"
+                      iconWidth={40}
+                      iconHeight={40}
+                      name="Rekap Sesi"
+                      containerStyles="w-20 h-20 rounded-full border-green-500 border-2 flex items-center justify-center mx-5"
+                      textStyles="font-NSBold text-green-500"
+                      handlePress={handleRegionChange}
+                      focused={false}
+                    />
+                    <IconButton
+                      source={drawingMode? "SelesaiMenggambarIcon" : "CekLuasAreaIcon"}
+                      color="rgb(168 85 247)"
+                      iconWidth={40}
+                      iconHeight={40}
+                      name={drawingMode? "Selesai Menggambar" : "Cek Luas"}
+                      containerStyles="w-20 h-20 rounded-full border-purple-500 border-2 flex items-center justify-center mx-5"
+                      textStyles="font-NSBold text-purple-500"
+                      handlePress={handleCekLuasArea}
+                      focused={false}
+                    />
+                    <IconButton
+                      source="RemoveIcon"
+                      color="rgb(239 68 68)"
+                      iconWidth={40}
+                      iconHeight={40}
+                      name="Hapus Area"
+                      containerStyles="w-20 h-20 rounded-full border-red-500 border-2 flex items-center justify-center mx-5"
+                      textStyles="font-NSBold text-red-500"
+                      handlePress={handleRemoveArea}
+                      focused={false}
+                    />
+
+                  {/* <CustomButton
                     title="Rekap Sesi"
                     handlePress={handleRegionChange}
-                    containerStyles={'bg-green-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    containerStyles={'bg-green-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
                   />
                   <CustomButton
                     title={drawingMode ? "Selesai Menggambar" : "Cek Luas Area"}
                     handlePress={handleCekLuasArea} // Toggle drawing mode and calculate area
-                    containerStyles={'bg-purple-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    containerStyles={'bg-purple-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
                   />
                   <CustomButton
                     title="Hapus Area"
                     handlePress={handleRemoveArea} // Toggle drawing mode and calculate area
-                    containerStyles={'bg-red-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    containerStyles={'bg-red-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
-                  />
+                  /> */}
                 </>
               )}
 
               {selectedMarkerIndex !== null && (
                 <>
-                  <CustomButton
+                  <IconButton
+                      source="RemoveIcon"
+                      color="rgb(239 68 68)"
+                      iconWidth={40}
+                      iconHeight={40}
+                      name="Hapus Marker"
+                      containerStyles="w-20 h-20 rounded-full border-red-500 border-2 flex items-center justify-center mx-5"
+                      textStyles="font-NSBold text-red-500"
+                      handlePress={handleDeleteMarker}
+                      focused={false}
+                    />
+                    <IconButton
+                      source="BalikIcon"
+                      color="rgb(34 197 94)"
+                      iconWidth={40}
+                      iconHeight={40}
+                      name="Balik"
+                      containerStyles="w-20 h-20 rounded-full border-green-500 border-2 flex items-center justify-center mx-5"
+                      textStyles="font-NSBold text-green-500"
+                      handlePress={handleCancelSelectMarker}
+                      focused={false}
+                    />
+                  {/* <CustomButton
                     title="Hapus Marker"
                     handlePress={handleDeleteMarker}
-                    containerStyles={'bg-red-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    containerStyles={'bg-red-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
                   />
                   <CustomButton
                     title="Balik"
                     handlePress={() => setSelectedMarkerIndex(null)}
-                    containerStyles={'bg-green-500 w-52 h-10 rounded-3xl items-center justify-center mt-10'}
+                    containerStyles={'bg-green-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
-                  />
+                  /> */}
                 </>
               )}
             </View>

@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Redirect, router, Link } from 'expo-router';
 import { deleteCurrentSession } from '@/lib/appwrite';
+import CustomButton from '@/components/custombutton';
 // import Ugmlogo from '@/assets/svg/ugmlogo';
 // import Splashimage from '@/assets/svg/splashimage';
 
@@ -16,32 +17,59 @@ const HomeScreen: React.FC = () => {
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: '100%' }}>
-        <View className='items-center justify-center h-1/3'>
-          <Text className='font-NSSemibold text-lg'> Sistem Irigasi </Text>
+        <View className='h-1/5 items-center justify-end'>
+          <Text>
+            <Text className='font-NSBold text-2xl'>Selamat Datang,{"\n"}</Text>
+            <Text className='font-NSSemibold text-lg'>Di Aplikasi Irigasi Lahan Bawang</Text>
+          </Text>
         </View>
 
-        <View className='justify-center items-center'>
-          <TouchableOpacity className='border-2 border-[#E1B106] w-full items-center mb-[-2px]' onPress={() => router.push('/bluetooth')}>
-            <Text className='font-NSSemibold text-lg py-5'>Bluetooth</Text>
+        <View className='justify-center items-center w-full h-3/5'>
+          <CustomButton
+            title='Bluetooth'
+            handlePress={() => router.push('/bluetooth')}
+            containerStyles='w-4/5 bg-white h-20 items-center justify-center rounded-2xl my-2 shadow-lg shadow-black'
+            textStyles='font-NSSemibold text-lg py-5 text-[#484C52]'
+          />
+          <CustomButton
+            title='Sensor'
+            handlePress={() => router.push('/sensors')}
+            containerStyles='w-4/5 bg-white h-20 items-center justify-center rounded-2xl my-2 shadow-lg shadow-black'
+            textStyles='font-NSSemibold text-lg py-5 text-[#484C52]'
+          />
+          <CustomButton
+            title='Kalkulasi Pupuk'
+            handlePress={() => router.push('/pupuk')}
+            containerStyles='w-4/5 bg-white h-20 items-center justify-center rounded-2xl my-2 shadow-lg shadow-black'
+            textStyles='font-NSSemibold text-lg py-5 text-[#484C52]'
+          />
+          <CustomButton
+            title='Tentang'
+            handlePress={() => router.push('/about')}
+            containerStyles='w-4/5 bg-white h-20 items-center justify-center rounded-2xl my-2 shadow-lg shadow-black'
+            textStyles='font-NSSemibold text-lg py-5 text-[#484C52]'
+          />          
+          {/* <TouchableOpacity className='border-2 border-[#E1B106] w-full items-center mb-[-2px]' onPress={() => router.push('/bluetooth')}>
+            <Text className='font-NSSemibold text-lg py-5 text-[#484C52]'>Bluetooth</Text>
           </TouchableOpacity>
           <TouchableOpacity className='border-2 border-[#E1B106] w-full items-center mb-[-2px]' onPress={() => router.push('/sensors')}>
-            <Text className='font-NSSemibold text-lg py-5'>Sensor</Text>
+            <Text className='font-NSSemibold text-lg py-5 text-[#484C52]'>Sensor</Text>
           </TouchableOpacity>
           <TouchableOpacity className='border-2 border-[#E1B106] w-full items-center mb-[-2px]' onPress={() => router.push('/pupuk')}>
-            <Text className='font-NSSemibold text-lg py-5'>Kalkulasi Pupuk</Text>
+            <Text className='font-NSSemibold text-lg py-5 text-[#484C52]'>Kalkulasi Pupuk</Text>
           </TouchableOpacity>
           <TouchableOpacity className='border-2 border-[#E1B106] w-full items-center mb-[-2px]' onPress={() => router.push('/about')}>
-            <Text className='font-NSSemibold text-lg py-5'>About</Text>
-          </TouchableOpacity>
+            <Text className='font-NSSemibold text-lg py-5 text-[#484C52]'>About</Text>
+          </TouchableOpacity> */}
         </View>
 
-        <View className='mt-16 justify-center items-center'>
-          <TouchableOpacity 
-            className='bg-red-500 h-12 w-32 justify-center items-center rounded-3xl'
-            onPress={handleLogOut}
-          >
-            <Text className='font-NSBold text-white'>Log Out</Text>
-          </TouchableOpacity>
+        <View className='justify-center items-center w-full h-1/5'>
+          <CustomButton
+            title='Log Out'
+            handlePress={() => handleLogOut}
+            containerStyles='bg-red-600 w-4/5 h-16 items-center justify-center rounded-2xl my-4 shadow-lg shadow-black'
+            textStyles='font-NSSemibold text-lg text-[#484C52]'
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

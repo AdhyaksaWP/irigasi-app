@@ -2,8 +2,6 @@
 import { Client, Account, ID, Databases, Query } from 'react-native-appwrite';
 import { Alert } from 'react-native';
 import { APPWRITE_PROJECTID, APPWRITE_DATABASEID, APPWRITE_STORAGEID, APPWRITE_USECOLLECTIONID } from '@env';
-// Init your React Native SDK
-
 
 export const appwriteConfig = {
     endpoint: 'https://cloud.appwrite.io/v1',
@@ -17,14 +15,14 @@ export const appwriteConfig = {
 const client = new Client();
 
 client
-    .setEndpoint(appwriteConfig.endpoint) // Your Appwrite Endpoint
-    .setProject(appwriteConfig.projectId) // Your project ID
-    .setPlatform(appwriteConfig.platform) // Your application ID or bundle ID.
+    .setEndpoint(appwriteConfig.endpoint)
+    .setProject(appwriteConfig.projectId)
+    .setPlatform(appwriteConfig.platform)
 
 const account = new Account(client);
 const databases = new Databases(client);
 
-export const createUser = async (email, password, username) => {
+export const createUser = async (email: any, password: any, username: any) => {
     try {
         const newAccount = await account.create(
             ID.unique(),
@@ -52,7 +50,7 @@ export const createUser = async (email, password, username) => {
     }
 }
 
-export const signIn = async (email,password) => {
+export const signIn = async (email: any,password: any) => {
     try {
         const user = await databases.listDocuments(
             appwriteConfig.databaseId,

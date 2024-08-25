@@ -1,82 +1,126 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Switch, TouchableOpacity } from 'react-native';
-import * as Progress from 'react-native-progress';
-import CustomButton from './CustomButton'; // Assuming you have this component
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 
-const SensorScreen = () => {
-    const [isEnabled, setIsEnabled] = useState(false);
-    const [progress, setProgress] = useState(0.00); // Initial progress
+const App = () => {
+  const [isOn, setIsOn] = useState(false);
+  const [percentage, setPercentage] = useState(5);
 
-    const toggleSwitch = () => {
-        setIsEnabled(previousState => !previousState);
-        setProgress(isEnabled ? 0.00 : 1.00); // Update progress based on the switch
-    };
+  const toggleSwitch = () => {
+    setIsOn(!isOn);
+    setPercentage(isOn ? 5 : 95);
+  };
 
-    const handleDataSensorPress = () => {
-        // Handle the press event here, like navigation or showing sensor data
-        console.log('Data Sensor button pressed');
-    };
-
-    return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>Kontrol Pompa</Text>
-            <Progress.Circle 
-                size={200} 
-                progress={progress} 
-                color={isEnabled ? '#00C853' : '#FF5252'} 
-                thickness={10} 
-                showsText 
-                textStyle={styles.progressText}
-                formatText={() => `${Math.round(progress * 100)} %`}
-            />
-            <Text style={styles.statusText}>Connecting / Running</Text>
-            <CustomButton
-                title={isEnabled ? 'TURNED ON' : 'TURNED OFF'}
-                handlePress={toggleSwitch}
-                containerStyles={`${isEnabled ? 'bg-green-500' : 'bg-red-500'} w-52 h-10 rounded-3xl items-center justify-center mt-10`}
-                textStyles='font-NSBold text-white text-sm'
-            />
-            <View style={styles.bottomNav}>
-                <TouchableOpacity onPress={handleDataSensorPress} activeOpacity={0.7}>
-                    <Text style={styles.dataSensorButton}>Data Sensor</Text>
-                </TouchableOpacity>
-            </View>
-        </SafeAreaView>
-    );
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.controlContainer}>
+        <Text style={styles.title}>Kontrol Pompa</Text>
+        <View style={styles.percentageCircle}>
+          <Text style={styles.percentageText}>{percentage}%</Text>
+        </View>
+        <Text style={styles.statusText}>Connecting / Running</Text>
+        <TouchableOpacity
+          style={[styles.button, isOn ? styles.onButton : styles.offButton]}
+          onPress={toggleSwitch}
+        >
+          <Text style={styles.buttonText}>{isOn ? 'TURNED ON' : 'TURNED OFF'}</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.sensorContainer}>
+        <TouchableOpacity style={styles.sensorButton}>
+          <Text style={styles.sensorText}>Data Sensor</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
 };
 
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#FFD54F',
-        paddingTop: 20,
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  controlContainer: {
+    alignItems: 'center',
+    backgroundColor: '#FFCC4D',
+    paddingVertical: 40, // Increased padding to adjust content spacing
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    marginVertical: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10, // Added margin to push it away from the top
+  },
+  percentageCircle: {
+    marginVertical: 20,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  percentageText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    color: '#3498db',
+  },
+  statusText: {
+    fontSize: 18,
+    marginBottom: 20,
+    color: '#333',
+  },
+  button: {
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 25,
+  },
+  offButton: {
+    backgroundColor: '#FF6347',
+  },
+  onButton: {
+    backgroundColor: '#32CD32',
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  sensorContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  sensorButton: {
+    backgroundColor: '#FFCC4D',
+    paddingVertical: 10,
+    paddingHorizontal: 40,
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
     },
-    progressText: {
-        fontSize: 32,
-        fontWeight: 'bold',
-    },
-    statusText: {
-        fontSize: 18,
-        color: '#616161',
-        marginVertical: 10,
-    },
-  
-    dataSensorButton: {
-        fontSize: 18,
-        backgroundColor: '#FFD700',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 25,
-        color: '#000',
-        fontWeight: 'bold',
-    },
+    shadowOpacity: 0.30,
+    shadowRadius: 4.65,
+    elevation: 8,
+  },
+  sensorText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
 });
+
+export default App;

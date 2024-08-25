@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, Switch } from 'react-native';
+import { View, Text, SafeAreaView, StyleSheet, Switch, TouchableOpacity } from 'react-native';
 import * as Progress from 'react-native-progress';
 import CustomButton from './CustomButton'; // Assuming you have this component
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -12,6 +12,11 @@ const SensorScreen = () => {
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
         setProgress(isEnabled ? 0.00 : 1.00); // Update progress based on the switch
+    };
+
+    const handleDataSensorPress = () => {
+        // Handle the press event here, like navigation or showing sensor data
+        console.log('Data Sensor button pressed');
     };
 
     return (
@@ -34,24 +39,14 @@ const SensorScreen = () => {
                 textStyles='font-NSBold text-white text-sm'
             />
             <View style={styles.bottomNav}>
-                <Text style={styles.dataSensorButton}>Data Sensor</Text>
+                <TouchableOpacity onPress={handleDataSensorPress} activeOpacity={0.7}>
+                    <Text style={styles.dataSensorButton}>Data Sensor</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
 };
 
-const Tab = createBottomTabNavigator();
-
-export default function App() {
-    return (
-        <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name="Sensor" component={SensorScreen} />
-                {/* Other tabs */}
-            </Tab.Navigator>
-        </NavigationContainer>
-    );
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -74,12 +69,7 @@ const styles = StyleSheet.create({
         color: '#616161',
         marginVertical: 10,
     },
-    bottomNav: {
-        position: 'absolute',
-        bottom: 30,
-        width: '100%',
-        alignItems: 'center',
-    },
+  
     dataSensorButton: {
         fontSize: 18,
         backgroundColor: '#FFD700',

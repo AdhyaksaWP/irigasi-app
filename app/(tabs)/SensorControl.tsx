@@ -7,11 +7,11 @@ import { NavigationContainer } from '@react-navigation/native';
 
 const SensorScreen = () => {
     const [isEnabled, setIsEnabled] = useState(false);
-    const [progress, setProgress] = useState(0.05); // Initial progress
+    const [progress, setProgress] = useState(0.00); // Initial progress
 
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
-        setProgress(isEnabled ? 0.05 : 0.95); // Update progress based on the switch
+        setProgress(isEnabled ? 0.00 : 1.00); // Update progress based on the switch
     };
 
     return (

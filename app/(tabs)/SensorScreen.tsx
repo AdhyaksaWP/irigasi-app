@@ -1,182 +1,148 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, SafeAreaView, TextInput } from 'react-native';
 
-interface SensorData {
-    id: number;
-    name: string;
-    value: number;
-}
+const sensors = [
+  { id: '1', name: 'Sensor 1', value: 23.3 },
+  { id: '2', name: 'Sensor 2', value: 78.0 },
+  { id: '3', name: 'Sensor 3', value: 23.3 },
+  { id: '4', name: 'Sensor 4', value: 23.3 },
+  { id: '5', name: 'Sensor 5', value: 23.3 },
+  { id: '6', name: 'Sensor 6', value: 23.3 },
+  { id: '7', name: 'Sensor 7', value: 23.3 },
+];
 
 const SensorScreen = () => {
-    const [selectedSensor, setSelectedSensor] = useState<SensorData | null>(null);
-    const [sensors, setSensors] = useState<SensorData[]>([
-        { id: 1, name: 'Sensor 1', value: 23.3 },
-        { id: 2, name: 'Sensor 1', value: 78.0 },
-        { id: 3, name: 'Sensor 1', value: 23.3 },
-        { id: 4, name: 'Sensor 1', value: 23.3 },
-        { id: 5, name: 'Sensor 1', value: 23.3 },
-        { id: 6, name: 'Sensor 1', value: 23.3 },
-        { id: 7, name: 'Sensor 1', value: 23.3 },
-    ]);
+  const [selectedId, setSelectedId] = useState(null);
+  const [dataDiberikan, setDataDiberikan] = useState('');
 
-    const calculateAverage = () => {
-        const total = sensors.reduce((sum, sensor) => sum + sensor.value, 0);
-        return (total / sensors.length).toFixed(1);
-    };
+  const handlePress = (item) => {
+    setSelectedId(item.id);
+    setDataDiberikan(item.value.toString());
+  };
 
-    const handleCatatPress = () => {
-        if (selectedSensor) {
-            const updatedSensors = sensors.map(sensor => 
-                sensor.id === selectedSensor.id ? { ...sensor, value: selectedSensor.value } : sensor
-            );
-            setSensors(updatedSensors);
-            Alert.alert('Success', `Data for ${selectedSensor.name} has been updated!`);
-        } else {
-            Alert.alert('No Sensor Selected', 'Please select a sensor first.');
-        }
-    };
+  const handleCatat = () => {
+    if (selectedId) {
+      const sensorIndex = sensors.findIndex((sensor) => sensor.id === selectedId);
+      sensors[sensorIndex].value = parseFloat(dataDiberikan);
+      setDataDiberikan(''); // Clear the input after updating
+    }
+  };
 
-    const renderItem = ({ item }: { item: SensorData }) => (
-        <TouchableOpacity
-            style={[
-                styles.sensorItem,
-                selectedSensor?.id === item.id && styles.selectedSensorItem,
-            ]}
-            onPress={() => setSelectedSensor(item)}
-        >
-            <Text style={styles.sensorId}>{item.id}</Text>
-            <View style={styles.sensorDetails}>
-                <Text style={[styles.sensorName, selectedSensor?.id === item.id && styles.selectedSensorName]}>
-                    {item.name}
-                </Text>
-                <Text style={styles.sensorValue}>{item.value}</Text>
-            </View>
-            <View style={styles.radioCircle}>
-                {selectedSensor?.id === item.id && <View style={styles.selectedRb} />}
-            </View>
-        </TouchableOpacity>
-    );
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={[
+        styles.sensorItem,
+        { backgroundColor: item.id === selectedId ? '#FFCC00' : '#f4f4f4' },
+      ]}
+      onPress={() => handlePress(item)}
+    >
+      <Text style={styles.sensorText}>{item.name}</Text>
+      <Text style={styles.sensorValue}>{item.value}</Text>
+    </TouchableOpacity>
+  );
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>Sensor</Text>
-            </View>
-            <FlatList
-                data={sensors}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
-                contentContainerStyle={styles.sensorList}
-            />
-            <View style={styles.dataContainer}>
-                <Text style={styles.dataText}>Data yang Diberikan</Text>
-                <Text style={styles.dataText}>{selectedSensor ? selectedSensor.value : '-'}</Text>
-                <Text style={styles.dataText}>Data Average</Text>
-                <Text style={styles.dataText}>{calculateAverage()}</Text>
-            </View>
-            <TouchableOpacity style={styles.saveButton} onPress={handleCatatPress}>
-                <Text style={styles.saveButtonText}>Catat</Text>
-            </TouchableOpacity>
-        </SafeAreaView>
-    );
+  const calculateAverage = () => {
+    const total = sensors.reduce((sum, sensor) => sum + sensor.value, 0);
+    return (total / sensors.length).toFixed(1);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={sensors}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        extraData={selectedId}
+        contentContainerStyle={{ paddingBottom: 16 }}
+        style={{ flex: 1 }}
+      />
+      <View style={styles.footer}>
+        <View style={styles.dataContainer}>
+          <Text style={styles.label}>Data yang Diberikan</Text>
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={dataDiberikan}
+            onChangeText={setDataDiberikan}
+            placeholder="Enter data"
+          />
+        </View>
+        <View style={styles.dataContainer}>
+          <Text style={styles.label}>Data Average</Text>
+          <Text style={styles.value}>{calculateAverage()}</Text>
+        </View>
+      </View>
+      <TouchableOpacity style={styles.button} onPress={handleCatat}>
+        <Text style={styles.buttonText}>CATAT</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#FFF',
-        paddingHorizontal: 20,
-        paddingTop: 20,
-    },
-    header: {
-        backgroundColor: '#FFD54F',
-        padding: 10,
-        borderRadius: 8,
-        marginBottom: 20,
-    },
-    headerText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    sensorList: {
-        paddingBottom: 20,
-    },
-    sensorItem: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        backgroundColor: '#F5F5F5',
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    selectedSensorItem: {
-        backgroundColor: '#FFD54F',
-    },
-    sensorId: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#000',
-        width: 30,
-    },
-    sensorDetails: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    sensorName: {
-        fontSize: 18,
-        color: '#000',
-    },
-    selectedSensorName: {
-        fontWeight: 'bold',
-    },
-    sensorValue: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    radioCircle: {
-        height: 24,
-        width: 24,
-        borderRadius: 12,
-        borderWidth: 2,
-        borderColor: '#000',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    selectedRb: {
-        width: 12,
-        height: 12,
-        borderRadius: 6,
-        backgroundColor: '#000',
-    },
-    dataContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 20,
-        paddingVertical: 10,
-        backgroundColor: '#E0E0E0',
-        borderRadius: 8,
-        paddingHorizontal: 20,
-    },
-    dataText: {
-        fontSize: 18,
-        color: '#000',
-    },
-    saveButton: {
-        backgroundColor: '#FFD54F',
-        paddingVertical: 15,
-        alignItems: 'center',
-        borderRadius: 8,
-    },
-    saveButtonText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#000',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingTop: 40, // Adjusted padding to prevent overlap with status bar
+  },
+  sensorItem: {
+    padding: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 16,
+    borderRadius: 8,
+  },
+  sensorText: {
+    fontSize: 16,
+    color: '#000',
+  },
+  sensorValue: {
+    fontSize: 16,
+    color: '#000',
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 16,
+    paddingHorizontal: 16,
+  },
+  dataContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  label: {
+    fontSize: 14,
+    color: '#000',
+    marginBottom: 8,
+  },
+  value: {
+    fontSize: 16,
+    color: '#000',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    fontSize: 16,
+    width: '100%',
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: '#FFCC00',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginHorizontal: 16,
+    marginBottom: 16,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: '#000',
+    fontWeight: 'bold',
+  },
 });
 
 export default SensorScreen;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 
-const App = () => {
+const SensorControl = () => {
   const [isOn, setIsOn] = useState(false);
   const [percentage, setPercentage] = useState(5);
 

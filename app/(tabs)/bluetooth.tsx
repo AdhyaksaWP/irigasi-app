@@ -5,6 +5,7 @@ import { useBleManager } from '../../context/BLEContext';
 import DeviceList from '@/components/DeviceConnectionModal';
 import CustomButton from '@/components/custombutton';
 import BluetoothIcon from '@/assets/icons/bluetoothIcon';
+import { StatusBar } from 'expo-status-bar';
 
 const Bluetooth = () => {
     const { 
@@ -40,8 +41,8 @@ const Bluetooth = () => {
     }, [checkConnectionStatus]);  
 
     return (
-        <SafeAreaView className='bg-primary h-full flex justify-center'>
-            <View className='flex justify-center items-center h-10/12'>
+        <SafeAreaView className='bg-white h-full flex justify-center'>
+            <View className='flex justify-center items-center h-2/6 w-full rounded-b-xl bg-primary'>
                 <View className='flex-row justify-center items-center gap-x-7'>
                     <BluetoothIcon
                         width ={26}
@@ -54,20 +55,24 @@ const Bluetooth = () => {
                 <Text className='font-NSBold my-5'>
                     Status: {isConnected ? "Connected" : "Disconnected"}
                 </Text>
-
+            </View>
+            <View className='flex justify-center items-center h-4/6 bg-white'>
                 <DeviceList
                     devices={allDevices}
                     connectToPeripheral={connectToDevice}
                 />
 
-                <CustomButton
-                    title={connectedDevice? 'Disconnect' : 'Turn on Bluetooth'}
-                    handlePress={connectedDevice? disconnectFromDevice : scanForDevices}
-                    containerStyles={`${connectedDevice? 'bg-red-500' : 'bg-tertiary'} ' w-52 h-10 rounded-3xl items-center justify-center mt-10'`}
-                    textStyles='font-NSBold text-white text-sm'
-                />        
-                {isScanning && <Text>Scanning for devices...</Text>}
+                <View className='flex justify-center items-center h-1/2'>
+                    <CustomButton
+                        title={connectedDevice? 'Disconnect' : 'Turn on Bluetooth'}
+                        handlePress={connectedDevice? disconnectFromDevice : scanForDevices}
+                        containerStyles={`${connectedDevice? 'bg-red-500' : 'bg-tertiary'} ' w-52 h-10 rounded-3xl items-center justify-center mt-10'`}
+                        textStyles='font-NSBold text-white text-sm'
+                    /> 
+                </View>       
             </View>
+
+            <StatusBar backgroundColor='#F9C405'/>
         </SafeAreaView>
     );
 };

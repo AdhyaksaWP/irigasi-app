@@ -2,18 +2,13 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Redirect, router, Link } from 'expo-router';
-import { deleteCurrentSession } from '@/lib/appwrite';
+import { deleteCurrentSession, getCurrentUser } from '@/lib/appwrite';
 import CustomButton from '@/components/custombutton';
+import { Account } from 'react-native-appwrite';
 // import Ugmlogo from '@/assets/svg/ugmlogo';
 // import Splashimage from '@/assets/svg/splashimage';
 
 const HomeScreen: React.FC = () => {
-
-  const handleLogOut = async () => {
-    await deleteCurrentSession();
-    router.push('../sign-in')
-  }
-
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: '100%' }}>
@@ -66,7 +61,10 @@ const HomeScreen: React.FC = () => {
         <View className='justify-center items-center w-full h-1/5'>
           <CustomButton
             title='Log Out'
-            handlePress={() => handleLogOut}
+            handlePress={async () => {
+              await deleteCurrentSession();
+              router.push('../sign-in')
+            }}
             containerStyles='bg-red-600 w-4/5 h-16 items-center justify-center rounded-2xl my-4 shadow-lg shadow-black'
             textStyles='font-NSSemibold text-lg text-[#484C52]'
           />

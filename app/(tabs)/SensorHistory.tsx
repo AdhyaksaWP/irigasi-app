@@ -2,12 +2,12 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SensorListScreen from './components/SensorListScreen';
-import SensorHistoryScreen from './components/SensorHistoryScreen';
+import SensorListScreen from '../../components/SensorListScreen';
+import SensorHistoryScreen from '../../components/SensoryHistoryScreen';
 
 const Stack = createNativeStackNavigator();
 
-const App = () => {
+const SensorHistory = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="SensorList">
@@ -19,7 +19,7 @@ const App = () => {
         <Stack.Screen 
           name="SensorHistory" 
           component={SensorHistoryScreen} 
-          options={({ route }) => ({ title: `Riwayat ${route.params.sensor}` })} 
+          // options={({ route }) => ({ title: `Riwayat ${route.params.sensor}` })} 
         />
       </Stack.Navigator>
     </NavigationContainer>

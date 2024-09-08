@@ -90,7 +90,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0.0"
-        resValue "string", "MAP_GEO_API_KEY", System.getenv("MAP_GEO_API_KEY") ?: ""
+        resValue "string", "EXPO_PUBLIC_MAP_GEO_API_KEY", System.getenv("EXPO_PUBLIC_MAP_GEO_API_KEY") ?: ""
     }
     signingConfigs {
         debug {

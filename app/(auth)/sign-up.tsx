@@ -7,6 +7,7 @@ import CustomButton from '@/components/custombutton'
 import FormField from '@/components/FormField';
 import { createUser } from '@/lib/appwrite';
 import { useGlobalContext } from '@/context/GlobalProvider';
+import { APPWRITE_PROJECTID, APPWRITE_DATABASEID, APPWRITE_STORAGEID, APPWRITE_USECOLLECTIONID } from '@env';
 
 const SignUp = () => {
   const { setUser, setIsLoggedIn } = useGlobalContext();
@@ -30,7 +31,10 @@ const SignUp = () => {
 
     if (password === confirmPassword) {
       try {
+        // console.log(APPWRITE_DATABASEID, APPWRITE_PROJECTID, APPWRITE_STORAGEID, APPWRITE_USECOLLECTIONID);
         const result = await createUser(email, password, username);
+        console.log("Hai");
+        
         setUser(result);
         setIsLoggedIn(true);
         

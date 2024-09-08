@@ -1,15 +1,24 @@
 
 import { Client, Account, ID, Databases, Query } from 'react-native-appwrite';
-import { Alert } from 'react-native';
-import { APPWRITE_PROJECTID, APPWRITE_DATABASEID, APPWRITE_STORAGEID, APPWRITE_USECOLLECTIONID } from '@env';
+// import { Alert } from 'react-native';
+// import { EXPO_PUBLIC_APPWRITE_PROJECTID, EXPO_PUBLIC_APPWRITE_DATABASEID, EXPO_PUBLIC_APPWRITE_STORAGEID, EXPO_PUBLIC_APPWRITE_USECOLLECTIONID } from '@env';
 
-export const appwriteConfig = {
+interface appWriteCofigTypes {
+    endpoint: string;
+    platform: string;
+    projectId: any;
+    databaseId: any;
+    useCollectionId: any;
+    storageId: any;
+}
+
+export const appwriteConfig:appWriteCofigTypes = {
     endpoint: 'https://cloud.appwrite.io/v1',
     platform: 'com.app.irigasi',
-    projectId: APPWRITE_PROJECTID,
-    databaseId: APPWRITE_DATABASEID,
-    useCollectionId: APPWRITE_USECOLLECTIONID,
-    storageId: APPWRITE_STORAGEID,
+    projectId: process.env.EXPO_PUBLIC_APPWRITE_PROJECTID,
+    databaseId: process.env.EXPO_PUBLIC_APPWRITE_DATABASEID,
+    useCollectionId: process.env.EXPO_PUBLIC_APPWRITE_USECOLLECTIONID,
+    storageId: process.env.EXPO_PUBLIC_APPWRITE_STORAGEID,
 }
 
 const client = new Client();

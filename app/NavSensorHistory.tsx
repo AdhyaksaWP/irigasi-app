@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import SensorListScreen from './SensorListScreen';
-import SensorDetailScreen from './SensorDetailScreen';
+import SensorListScreen from '../components/SensorListScreen';
+import SensorDetailScreen from '../components/SensoryHistoryScreen';
 
 const Stack = createStackNavigator();
 

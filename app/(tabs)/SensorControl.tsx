@@ -1,23 +1,58 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+import { useBleManager } from '../../context/BLEContext'; // Ensure BLE context is set up
 
 const SensorControl = () => {
   const [isOn, setIsOn] = useState(false);
   const [percentage, setPercentage] = useState(5);
+  const [status, setStatus] = useState('Disconnected'); // Default status
+  
+  const { writeCharacteristic, connectedDevice } = useBleManager(); 
+  const navigation = useNavigation(); // Add navigation
 
-  const toggleSwitch = () => {
-    setIsOn(!isOn);
-    setPercentage(isOn ? 5 : 95);
+  const toggleSwitch = async () => {
+    const newState = !isOn;
+    setIsOn(newState);
+    setPercentage(newState ? 95 : 5);
+
+    if (connectedDevice) {
+      try {
+        setStatus('Connecting...'); // Set status to "Connecting" when trying to send a command
+
+        const valueToSend = newState ? '1' : '0';  // '1' for ON, '0' for OFF
+        const encodedValue = Buffer.from(valueToSend, 'utf-8'); // Convert to bytes
+
+        // Sending value to the ESP32 (BLE characteristic)
+        await writeCharacteristic.writeWithResponse(encodedValue);
+
+        console.log(`Sent ${valueToSend} to the ESP32`);
+        setStatus('Running'); // Set status to "Running" after successful write
+      } catch (error) {
+        console.error('Error writing to characteristic:', error);
+        setStatus('Error'); // Set status to "Error" if write fails
+      }
+    } else {
+      setStatus('Disconnected');
+      console.error('No device connected');
+    }
+  };
+
+  const navigateToSensorData = () => {
+    navigation.navigate('Sensors'); // Navigate to the Sensors screen
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.controlContainer}>
         <Text style={styles.title}>Kontrol Pompa</Text>
+        
         <View style={styles.percentageCircle}>
           <Text style={styles.percentageText}>{percentage}%</Text>
         </View>
-        <Text style={styles.statusText}>Connecting / Running</Text>
+        
+        <Text style={styles.statusText}>{status}</Text>
+        
         <TouchableOpacity
           style={[styles.button, isOn ? styles.onButton : styles.offButton]}
           onPress={toggleSwitch}
@@ -25,8 +60,10 @@ const SensorControl = () => {
           <Text style={styles.buttonText}>{isOn ? 'TURNED ON' : 'TURNED OFF'}</Text>
         </TouchableOpacity>
       </View>
+
       <View style={styles.sensorContainer}>
-        <TouchableOpacity style={styles.sensorButton}>
+        {/* Button to navigate to the sensor data page */}
+        <TouchableOpacity style={styles.sensorButton} onPress={navigateToSensorData}>
           <Text style={styles.sensorText}>Data Sensor</Text>
         </TouchableOpacity>
       </View>

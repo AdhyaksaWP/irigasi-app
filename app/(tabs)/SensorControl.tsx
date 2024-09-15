@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // Import navigation hook
-import { useBleManager } from '../../context/BLEContext'; // Ensure BLE context is set up
+import { useNavigation } from '@react-navigation/native'; // 
+import { useBleManager } from '../../context/BLEContext'; // 
 
 const SensorControl = () => {
   const [isOn, setIsOn] = useState(false);

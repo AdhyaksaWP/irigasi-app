@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useState, useEffect } from 'react';
 import { PermissionsAndroid, Platform, Alert, Linking } from 'react-native';
-import { BleManager, BleError, Characteristic, Device } from 'react-native-ble-plx';
+import { BleManager } from 'react-native-ble-plx';
 import * as ExpoDevice from 'expo-device';
 import base64 from 'react-native-base64';
 
@@ -219,6 +219,28 @@ const BleManagerProvider = ({ children }) => {
         }
     }
 
+    const writeToDevice = async (data) => {
+        if (!connectedDevice) {
+            console.error("No device connected");
+            return;
+        }
+
+        try {
+            // Convert data to Base64
+            const base64Data = base64.encode(data);
+            // Write to the connected device
+            await bleManager.writeCharacteristicWithResponseForDevice(
+                connectedDevice.id,
+                SERVICE_UUID,
+                CHARACTERISTIC_UUID,
+                base64Data
+            );
+            console.log("Data written successfully:", data);
+        } catch (error) {
+            console.error("Error writing to device:", error);
+        }
+    };
+
     const disconnectFromDevice = () => {
         if (connectedDevice){
             bleManager.cancelDeviceConnection(connectedDevice.id);
@@ -236,6 +258,7 @@ const BleManagerProvider = ({ children }) => {
             connectedDevice,
             checkConnectionStatus,
             sensorIrigasi,
+            writeToDevice,
             disconnectFromDevice
         }}>
             {children}

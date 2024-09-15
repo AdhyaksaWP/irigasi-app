@@ -21,7 +21,7 @@ const TabIcon: React.FC<TabIconProps> = ({ source, color, name, focused }) => {
         <IconSource color={color} />
       )}
       
-      <Text className = 'font-NSMedium text-[#49454F]'>
+      <Text className = 'font-NSMedium text-[#49454F] text-xs'>
         {focused ? name : ''}
       </Text>
     </View>

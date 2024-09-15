@@ -13,7 +13,7 @@ type DeviceListProps = {
   connectToPeripheral: (device: Device) => void;
 };
 
-const DeviceListItem: FC<DeviceListItemProps> = ({ item, connectToPeripheral, isLastItem }) => {
+const DeviceListItem: FC<DeviceListItemProps> = ({ item, connectToPeripheral  }) => {
   const connectToDevice = useCallback(() => {
     connectToPeripheral(item.item);
   }, [connectToPeripheral, item.item]);
@@ -21,10 +21,10 @@ const DeviceListItem: FC<DeviceListItemProps> = ({ item, connectToPeripheral, is
   return (
     <View className={`flex flex-row bg-primary h-16 rounded-xl justify-between items-center p-2 border-2' mt-10`}>
       <View className='flex-row items-center justify-center'>
-        <View className='border-transparent bg-white w-8 h-8 rounded-full mr-4 items-center justify-center'>
+        <View className='border-transparent bg-white w-8 h-8 rounded-full items-center justify-center'>
           <Text className='text-center font-NSBold'>{item.index + 1}</Text>
         </View>
-        <Text className="font-NSSemibold">{item.item.name ?? "Unnamed Device"}</Text>
+        <Text className="font-NSSemibold text-xs mx-2">{item.item.name ?? "Unnamed Device"}</Text>
       </View>
       <CustomButton
             title= "Connect"
@@ -40,15 +40,14 @@ const DeviceList: FC<DeviceListProps> = ({ devices, connectToPeripheral }) => {
   const renderDeviceListItem = useCallback(
     (item: ListRenderItemInfo<Device>) => {
       if (!item.item.name) {
-        return null; // Skip rendering this item
+        return null;
       }
 
-      const isLastItem = item.index === devices.length - 1;
       return (
         <DeviceListItem 
           item={item} 
           connectToPeripheral={connectToPeripheral} 
-          // isLastItem={isLastItem} 
+          // ={} 
         />
       );
     },
@@ -65,25 +64,5 @@ const DeviceList: FC<DeviceListProps> = ({ devices, connectToPeripheral }) => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  flatListContainer: {
-    justifyContent: 'center',
-  },
-  ctaButton: {
-    backgroundColor: '#FF6060',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 50,
-    marginHorizontal: 20,
-    marginBottom: 5,
-    borderRadius: 8,
-  },
-  ctaButtonText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-});
 
 export default DeviceList;

@@ -1,98 +1,80 @@
-import React, { useState, useEffect, FC } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, FlatList } from 'react-native';
-import { useBleManager } from '../../context/BLEContext';  // Ensure you have the BLE context available
-import SensorIcon from '@/assets/icons/sensorIcon';  // Ensure the icon is available in your assets
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, SafeAreaView} from 'react-native';
+// import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+import { useBleManager } from '../../context/BLEContext'; // Ensure BLE context is set up
+import SensorReadingsModal from '@/components/SensorReadingsModal';
+import FocusAwareStatusBar from '@/components/FocusedStatusBar';
+import base64 from 'react-native-base64';
+// import { BleManager } from 'react-native-ble-plx';
 
-// Sensor Item Component
-const SensorItem: FC<{ title: string; data: number }> = ({ title, data }) => (
-  <View style={styles.sensorItem}>
-    <Text style={styles.sensorItemText}>{title}</Text>
-    <Text style={styles.sensorItemData}>{data}</Text>
-  </View>
-);
+const Sensors = () => {
+  const [isOn, setIsOn] = useState(false);
+  const [percentage, setPercentage] = useState(5);
+  const [status, setStatus] = useState('Disconnected'); // Default status
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  
+  const { writeToDevice, connectedDevice } = useBleManager();
+  // const navigation = useNavigation(); // Add navigation
 
-// Sensors Component
-const Sensors: FC<{ onBackPress: () => void }> = ({ onBackPress }) => {
-  const { sensorIrigasi } = useBleManager();
-  const [sensorData, setSensorData] = useState<{ title: string, data: number }[]>([]);
+  const toggleSwitch = async () => {
+    const newState = !isOn;
+    setIsOn(newState);
+    setPercentage(newState ? 95 : 5);
 
-  useEffect(() => {
-    if (sensorIrigasi.length > 0) {
-      const formattedData = sensorIrigasi.map((value: number, index: number) => ({
-        title: index === sensorIrigasi.length - 1 ? 'Average' : `Sensor ${index + 1}`,
-        data: value,
-      }));
-      setSensorData(formattedData);
+    if (connectedDevice) {
+      try {
+        setStatus('Connecting...');
+        const valueToSend = newState ? '1' : '0';
+        writeToDevice(valueToSend);
+        setStatus('Connected');
+      } catch (error) {
+        console.error('Error writing to characteristic:', error);
+        setStatus('Error'); // Set status to "Error" if write fails
+      }
+    } else {
+      setStatus('Disconnected');
+      console.error('No device connected');
     }
-  }, [sensorIrigasi]);
+  };
+
+  const toggleSensorReadingModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.sensorContainer}>
-        <TouchableOpacity onPress={onBackPress} style={styles.backButton}>
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
-        <View style={styles.sensorHeader}>
-          <SensorIcon color={"#000"} height={52} width={50} />
-          <Text style={styles.sensorHeaderText}>Pembacaan Sensor-Sensor</Text>
+    <SafeAreaView className="flex h-full bg-white justify-center px-5">
+      <View className="items-center bg-yellow-400 py-10 px-5 rounded-2xl shadow-lg mb-5">
+        <Text className="text-xl font-bold text-gray-800 mb-4">Kontrol Pompa</Text>
+
+        <View className="my-5 w-28 h-28 rounded-full bg-white justify-center items-center">
+          <Text className="text-4xl font-bold text-blue-500">{percentage}%</Text>
         </View>
-        <FlatList
-          data={sensorData}
-          keyExtractor={(item) => item.title}
-          renderItem={({ item }) => <SensorItem title={item.title} data={item.data} />}
-        />
+
+        <Text className="text-lg mb-5 text-gray-800">{status}</Text>
+
+        <TouchableOpacity
+          className={`py-4 px-10 rounded-full ${
+            isOn ? 'bg-green-500' : 'bg-red-500'
+          }`}
+          onPress={toggleSwitch}
+        >
+          <Text className="text-white text-lg font-bold">{isOn ? 'TURNED ON' : 'TURNED OFF'}</Text>
+        </TouchableOpacity>
       </View>
+
+      <View className="items-center mt-5">
+        {/* Button to navigate to the sensor data page */}
+        <TouchableOpacity
+          className="bg-yellow-400 py-3 px-10 rounded-lg shadow-lg"
+          onPress={toggleSensorReadingModal}
+        >
+          <Text className="text-lg font-bold text-gray-800">Data Sensor</Text>
+        </TouchableOpacity>
+      </View>
+      <SensorReadingsModal visibility={isModalVisible} onClose={toggleSensorReadingModal}/>
+      <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#ffffff'/>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFF',
-    justifyContent: 'center',
-    paddingHorizontal: 20,
-  },
-  sensorContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  backButton: {
-    marginBottom: 20,
-    padding: 10,
-    backgroundColor: '#FFCC4D',
-    borderRadius: 10,
-  },
-  backButtonText: {
-    fontSize: 16,
-    color: '#333',
-  },
-  sensorHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  sensorHeaderText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  sensorItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  sensorItemText: {
-    fontSize: 16,
-  },
-  sensorItemData: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
 
 export default Sensors;

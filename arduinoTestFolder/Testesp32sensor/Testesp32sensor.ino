@@ -6,10 +6,11 @@
 #define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
 
 BLECharacteristic *pCharacteristic;
+String dataReceived;
 
 void setup() {
   Serial.begin(115200);
-  Serial.println("63,4549,464,056,457,5845");
+  // Serial.println("63,4549,464,056,457,5845");
 
   BLEDevice::init("ESP32_Irrigation_Sensor");
   BLEServer *pServer = BLEDevice::createServer();
@@ -29,28 +30,29 @@ void setup() {
   pAdvertising->setMinPreferred(0x06);  // functions that help with iPhone connections issue
   pAdvertising->setMinPreferred(0x12);
   BLEDevice::startAdvertising();
-  Serial.println("Characteristic defined! Now you can read it in your phone!");
+  // Serial.println("Characteristic defined! Now you can read it in your phone!");
 }
 
 void loop() {
   // Update and notify the characteristic value
-  static int sensorValue = 0;
-  sensorValue++;
+  // static int sensorValue = 0;
+  // sensorValue++;
   
-  // Convert the sensor value to a string and set it as the characteristic value
-  String sensorValueStr = String(sensorValue);
-  String sensorValueToSend;
+  // // Convert the sensor value to a string and set it as the characteristic value
+  // String sensorValueStr = String(sensorValue);
+  // String sensorValueToSend;
 
-  for (int i = 0; i<6; i++){
-    sensorValueToSend += sensorValueStr + ",";
-  }
-  pCharacteristic->setValue(sensorValueToSend.c_str());
+  // for (int i = 0; i<6; i++){
+  //   sensorValueToSend += sensorValueStr + ",";
+  // }
+  // pCharacteristic->setValue(sensorValueToSend.c_str());
   
   // Notify the client of the new value
-  pCharacteristic->notify();
+  // pCharacteristic->notify();
+  dataReceived = pCharacteristic->getValue();
   
-  Serial.print("Sent value: ");
-  Serial.println(sensorValueToSend);
+  Serial.print("Value read: ");
+  Serial.println(dataReceived);
 
   delay(2000); // Delay for 2 seconds before sending the next value
 }

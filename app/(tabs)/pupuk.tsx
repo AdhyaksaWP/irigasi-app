@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from 'react-native-maps';
-import CustomButton from '@/components/custombutton';
+// import CustomButton from '@/components/custombutton';
 import * as Location from 'expo-location';
 import { useBleManager } from '@/context/BLEContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAreaOfPolygon } from 'geolib'; // Import the geolib function to calculate area
 import IconButton from '@/components/iconButton';
+import FocusAwareStatusBar from '@/components/FocusedStatusBar';
 
 const zoomLevel = 17;
 const latitudeDelta = Math.exp(Math.log(360) - zoomLevel * Math.LN2);
@@ -133,7 +134,7 @@ const Pupuk = () => {
                       iconWidth={40}
                       iconHeight={40}
                       name="Rekap Sesi"
-                      containerStyles="w-20 h-20 rounded-full border-green-500 border-2 flex items-center justify-center mx-5"
+                      containerStyles="w-20 h-20 rounded-xl border-green-500 border-4 flex items-center justify-center mx-5"
                       textStyles="font-NSBold text-green-500"
                       handlePress={handleRegionChange}
                       focused={false}
@@ -144,7 +145,7 @@ const Pupuk = () => {
                       iconWidth={40}
                       iconHeight={40}
                       name={drawingMode? "Selesai Menggambar" : "Cek Luas"}
-                      containerStyles="w-20 h-20 rounded-full border-purple-500 border-2 flex items-center justify-center mx-5"
+                      containerStyles="w-20 h-20 rounded-xl border-purple-500 border-4 flex items-center justify-center mx-5"
                       textStyles="font-NSBold text-purple-500"
                       handlePress={handleCekLuasArea}
                       focused={false}
@@ -155,7 +156,7 @@ const Pupuk = () => {
                       iconWidth={40}
                       iconHeight={40}
                       name="Hapus Area"
-                      containerStyles="w-20 h-20 rounded-full border-red-500 border-2 flex items-center justify-center mx-5"
+                      containerStyles="w-20 h-20 rounded-xl border-red-500 border-4 flex items-center justify-center mx-5"
                       textStyles="font-NSBold text-red-500"
                       handlePress={handleRemoveArea}
                       focused={false}
@@ -164,19 +165,19 @@ const Pupuk = () => {
                   {/* <CustomButton
                     title="Rekap Sesi"
                     handlePress={handleRegionChange}
-                    containerStyles={'bg-green-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
+                    containerStyles={'bg-green-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
                   />
                   <CustomButton
                     title={drawingMode ? "Selesai Menggambar" : "Cek Luas Area"}
                     handlePress={handleCekLuasArea} // Toggle drawing mode and calculate area
-                    containerStyles={'bg-purple-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
+                    containerStyles={'bg-purple-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
                   />
                   <CustomButton
                     title="Hapus Area"
                     handlePress={handleRemoveArea} // Toggle drawing mode and calculate area
-                    containerStyles={'bg-red-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
+                    containerStyles={'bg-red-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
                   /> */}
                 </>
@@ -190,7 +191,7 @@ const Pupuk = () => {
                       iconWidth={40}
                       iconHeight={40}
                       name="Hapus Marker"
-                      containerStyles="w-20 h-20 rounded-full border-red-500 border-2 flex items-center justify-center mx-5"
+                      containerStyles="w-20 h-20 rounded-xl border-red-500 border-4 flex items-center justify-center mx-5"
                       textStyles="font-NSBold text-red-500"
                       handlePress={handleDeleteMarker}
                       focused={false}
@@ -201,7 +202,7 @@ const Pupuk = () => {
                       iconWidth={40}
                       iconHeight={40}
                       name="Balik"
-                      containerStyles="w-20 h-20 rounded-full border-green-500 border-2 flex items-center justify-center mx-5"
+                      containerStyles="w-20 h-20 rounded-xl border-green-500 border-4 flex items-center justify-center mx-5"
                       textStyles="font-NSBold text-green-500"
                       handlePress={handleCancelSelectMarker}
                       focused={false}
@@ -209,13 +210,13 @@ const Pupuk = () => {
                   {/* <CustomButton
                     title="Hapus Marker"
                     handlePress={handleDeleteMarker}
-                    containerStyles={'bg-red-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
+                    containerStyles={'bg-red-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
                   />
                   <CustomButton
                     title="Balik"
                     handlePress={() => setSelectedMarkerIndex(null)}
-                    containerStyles={'bg-green-500 w-16 h-16 rounded-full items-center justify-center mt-8'}
+                    containerStyles={'bg-green-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
                     textStyles={'font-NSBold text-white text-sm'}
                   /> */}
                 </>
@@ -224,6 +225,7 @@ const Pupuk = () => {
           </View>
         </View>
       </ScrollView>
+      <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#F9C405'/>
     </SafeAreaView>
   );
 };

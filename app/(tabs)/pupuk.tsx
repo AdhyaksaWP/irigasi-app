@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, Text, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from 'react-native-maps';
-// import CustomButton from '@/components/custombutton';
 import * as Location from 'expo-location';
 import { useBleManager } from '@/context/BLEContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAreaOfPolygon } from 'geolib'; // Import the geolib function to calculate area
 import IconButton from '@/components/iconButton';
 import FocusAwareStatusBar from '@/components/FocusedStatusBar';
+import { useNavigation } from '@react-navigation/native';
 
 const zoomLevel = 17;
 const latitudeDelta = Math.exp(Math.log(360) - zoomLevel * Math.LN2);
@@ -21,11 +21,19 @@ const Pupuk = () => {
     latitudeDelta: latitudeDelta,
     longitudeDelta: longitudeDelta,
   }]);
+
   const { sensorIrigasi } = useBleManager();
   const [sensorData, setSensorData] = useState<String>();
   const [selectedMarkerIndex, setSelectedMarkerIndex] = useState<number | null>(null);
   const [drawingMode, setDrawingMode] = useState<Boolean>(false);
   const [polygonCoordinates, setPolygonCoordinates] = useState<any[]>([]);
+  const [area, setArea] = useState<number | null>(null); // Store the calculated area
+  const navigation = useNavigation(); // To navigate to the result page
+
+  useEffect(() => {
+    // Request for location permission and retrieve current location
+    handleRegionChange();
+  }, []);
 
   const handleRegionChange = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -65,8 +73,9 @@ const Pupuk = () => {
     setDrawingMode(!drawingMode);
 
     if (!drawingMode && polygonCoordinates.length > 2) {
-      const area = getAreaOfPolygon(polygonCoordinates);
-      Alert.alert('Luas Area', `Luas area yang dipilih adalah: ${area.toFixed(2)} m²`);
+      const calculatedArea = getAreaOfPolygon(polygonCoordinates);
+      setArea(calculatedArea); // Store the calculated area
+      Alert.alert('Luas Area', `Luas area yang dipilih adalah: ${calculatedArea.toFixed(2)} m²`);
     }
   };
 
@@ -80,11 +89,24 @@ const Pupuk = () => {
 
   const handleRemoveArea = async () => {
     setPolygonCoordinates([]);
-  }
+    setArea(null); // Clear the area when removing the polygon
+  };
 
   const handleCancelSelectMarker = async () => {
     setSelectedMarkerIndex(null);
-  }
+  };
+
+  const handleProcessResults = () => {
+    if (area && polygonCoordinates.length >= 4) {
+      navigation.navigate('Result', {
+        polygonCoordinates,
+        area,
+        sensorData
+      });
+    } else {
+      Alert.alert('Incomplete Data', 'Ensure the area is calculated and you have 4 points.');
+    }
+  };
 
   return (
     <SafeAreaView className='h-full bg-primary flex-1'>
@@ -140,11 +162,11 @@ const Pupuk = () => {
                       focused={false}
                     />
                     <IconButton
-                      source={drawingMode? "SelesaiMenggambarIcon" : "CekLuasAreaIcon"}
+                      source={drawingMode ? "SelesaiMenggambarIcon" : "CekLuasAreaIcon"}
                       color="rgb(168 85 247)"
                       iconWidth={40}
                       iconHeight={40}
-                      name={drawingMode? "Selesai Menggambar" : "Cek Luas"}
+                      name={drawingMode ? "Selesai Menggambar" : "Cek Luas"}
                       containerStyles="w-20 h-20 rounded-xl border-purple-500 border-4 flex items-center justify-center mx-5"
                       textStyles="font-NSBold text-purple-500"
                       handlePress={handleCekLuasArea}
@@ -161,25 +183,19 @@ const Pupuk = () => {
                       handlePress={handleRemoveArea}
                       focused={false}
                     />
-
-                  {/* <CustomButton
-                    title="Rekap Sesi"
-                    handlePress={handleRegionChange}
-                    containerStyles={'bg-green-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
-                    textStyles={'font-NSBold text-white text-sm'}
-                  />
-                  <CustomButton
-                    title={drawingMode ? "Selesai Menggambar" : "Cek Luas Area"}
-                    handlePress={handleCekLuasArea} // Toggle drawing mode and calculate area
-                    containerStyles={'bg-purple-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
-                    textStyles={'font-NSBold text-white text-sm'}
-                  />
-                  <CustomButton
-                    title="Hapus Area"
-                    handlePress={handleRemoveArea} // Toggle drawing mode and calculate area
-                    containerStyles={'bg-red-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
-                    textStyles={'font-NSBold text-white text-sm'}
-                  /> */}
+                    {area && (
+                      <IconButton
+                        source="ProcessIcon"
+                        color="rgb(34 197 94)"
+                        iconWidth={40}
+                        iconHeight={40}
+                        name="Process Results"
+                        containerStyles="w-20 h-20 rounded-xl border-green-500 border-4 flex items-center justify-center mx-5"
+                        textStyles="font-NSBold text-green-500"
+                        handlePress={handleProcessResults}
+                        focused={false}
+                      />
+                    )}
                 </>
               )}
 
@@ -207,18 +223,6 @@ const Pupuk = () => {
                       handlePress={handleCancelSelectMarker}
                       focused={false}
                     />
-                  {/* <CustomButton
-                    title="Hapus Marker"
-                    handlePress={handleDeleteMarker}
-                    containerStyles={'bg-red-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
-                    textStyles={'font-NSBold text-white text-sm'}
-                  />
-                  <CustomButton
-                    title="Balik"
-                    handlePress={() => setSelectedMarkerIndex(null)}
-                    containerStyles={'bg-green-500 w-16 h-16 rounded-xl items-center justify-center mt-8'}
-                    textStyles={'font-NSBold text-white text-sm'}
-                  /> */}
                 </>
               )}
             </View>

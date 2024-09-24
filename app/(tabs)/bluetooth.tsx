@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useBleManager } from '../../context/BLEContext';
 import DeviceList from '@/components/DeviceConnectionModal';
 import CustomButton from '@/components/custombutton';
 import BluetoothIcon from '@/assets/icons/bluetoothIcon';
-// import { StatusBar } from 'expo-status-bar';
 import FocusAwareStatusBar from '@/components/FocusedStatusBar';
+import { useNavigation } from '@react-navigation/native'; // For navigation to Pupuk page
 
 const Bluetooth = () => {
     const { 
@@ -17,11 +17,18 @@ const Bluetooth = () => {
         connectedDevice, 
         checkConnectionStatus, 
         sensorIrigasi, 
-        disconnectFromDevice } = useBleManager();
+        disconnectFromDevice 
+    } = useBleManager();
+    
     const [isScanning, setIsScanning] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
+    const [terminalData, setTerminalData] = useState(''); // New state for terminal data
+    const navigation = useNavigation(); // For navigation
 
-    // console.log("Calling From Bluetooth.tsx: ", sensorIrigasi);
+    // Function to handle receiving data
+    const handleReceivedData = (data) => {
+        setTerminalData(prevData => prevData + '\n' + data);
+    };
 
     const scanForDevices = async () => {
         const isPermissionEnabled = await requestPermissions();
@@ -39,7 +46,7 @@ const Bluetooth = () => {
 
     useEffect(() => {
         setIsConnected(checkConnectionStatus());
-    }, [checkConnectionStatus]);  
+    }, [checkConnectionStatus]);
 
     return (
         <SafeAreaView className='bg-white h-full flex justify-center'>
@@ -50,7 +57,6 @@ const Bluetooth = () => {
                         height={48}
                         color = "#000000"
                     />
-                    {/* <Text className='font-NSBold'>Bluetooth Connection</Text> */}
                 </View>
 
                 <Text className='font-NSBold'>
@@ -59,18 +65,31 @@ const Bluetooth = () => {
 
                 <View className='flex justify-center items-center'>
                     <CustomButton
-                        title={connectedDevice? 'Disconnect' : 'Mulai Scan'}
-                        handlePress={connectedDevice? disconnectFromDevice : scanForDevices}
-                        containerStyles={`${connectedDevice? 'bg-red-500' : 'bg-tertiary shadow-lg shadow-black'} ' w-52 h-12 rounded-xl items-center justify-center mt-10'`}
+                        title={connectedDevice ? 'Disconnect' : 'Mulai Scan'}
+                        handlePress={connectedDevice ? disconnectFromDevice : scanForDevices}
+                        containerStyles={connectedDevice ? 'bg-red-500 w-52 h-12 rounded-xl' : 'bg-tertiary shadow-lg w-52 h-12 rounded-xl'}
                         textStyles='font-NSBold text-white text-sm'
-                    /> 
+                    />
                 </View>   
             </View>
-            <View className='flex justify-center items-center h-1/2 bg-white'>
-                <DeviceList
-                    devices={allDevices}
-                    connectToPeripheral={connectToDevice}
-                />    
+            
+            {/* Terminal to show received data */}
+            <View className='bg-gray-100 p-4 h-1/4 w-full'>
+                <ScrollView>
+                    <Text className='font-NSBold text-sm'>
+                        {terminalData || 'No Data Received'}
+                    </Text>
+                </ScrollView>
+            </View>
+
+            {/* Button to navigate to Pupuk page */}
+            <View className='flex justify-center items-center mt-4'>
+                <CustomButton
+                    title="Go to Pupuk Page"
+                    handlePress={() => navigation.navigate('Pupuk')}
+                    containerStyles='bg-primary w-52 h-12 rounded-xl'
+                    textStyles='font-NSBold text-white text-sm'
+                />
             </View>
 
             <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#F9C405'/>

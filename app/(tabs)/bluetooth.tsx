@@ -6,7 +6,8 @@ import DeviceList from '@/components/DeviceConnectionModal';
 import CustomButton from '@/components/custombutton';
 import BluetoothIcon from '@/assets/icons/bluetoothIcon';
 import FocusAwareStatusBar from '@/components/FocusedStatusBar';
-import { useNavigation } from '@react-navigation/native'; // For navigation to Pupuk page
+import { router } from 'expo-router';
+// import { useNavigation } from '@react-navigation/native'; // For navigation to Pupuk page
 
 const Bluetooth = () => {
     const { 
@@ -23,12 +24,12 @@ const Bluetooth = () => {
     const [isScanning, setIsScanning] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
     const [terminalData, setTerminalData] = useState(''); // New state for terminal data
-    const navigation = useNavigation(); // For navigation
+    // const navigation = useNavigation(); // For navigation
 
     // Function to handle receiving data
-    const handleReceivedData = (data) => {
-        setTerminalData(prevData => prevData + '\n' + data);
-    };
+    useEffect (() => {
+        setTerminalData(sensorIrigasi);
+    })
 
     const scanForDevices = async () => {
         const isPermissionEnabled = await requestPermissions();
@@ -53,8 +54,8 @@ const Bluetooth = () => {
             <View className='flex justify-center items-center bg-primary h-1/2 w-full rounded-b-xl gap-y-10 shadow-lg shadow-black mb-10'>
                 <View className='flex-row justify-center items-center'>
                     <BluetoothIcon
-                        width ={26}
-                        height={48}
+                        width ={20}
+                        height={37}
                         color = "#000000"
                     />
                 </View>
@@ -65,16 +66,21 @@ const Bluetooth = () => {
 
                 <View className='flex justify-center items-center'>
                     <CustomButton
-                        title={connectedDevice ? 'Disconnect' : 'Mulai Scan'}
-                        handlePress={connectedDevice ? disconnectFromDevice : scanForDevices}
-                        containerStyles={connectedDevice ? 'bg-red-500 w-52 h-12 rounded-xl' : 'bg-tertiary shadow-lg w-52 h-12 rounded-xl'}
+                        title={connectedDevice? 'Disconnect' : 'Mulai Scan'}
+                        handlePress={connectedDevice? disconnectFromDevice : scanForDevices}
+                        containerStyles={`${connectedDevice? 'bg-red-500' : 'bg-tertiary shadow-lg shadow-black'} ' w-52 h-12 rounded-xl items-center justify-center mt-10'`}
                         textStyles='font-NSBold text-white text-sm'
-                    />
-                </View>   
+                    /> 
+                </View>
             </View>
-            
-            {/* Terminal to show received data */}
-            <View className='bg-gray-100 p-4 h-1/4 w-full'>
+            <View className='flex justify-center items-center h-1/5 bg-white'>
+                <DeviceList
+                    devices={allDevices}
+                    connectToPeripheral={connectToDevice}
+                />    
+            </View>
+
+            <View className='bg-gray-100 p-4 h-1/5 w-full'>
                 <ScrollView>
                     <Text className='font-NSBold text-sm'>
                         {terminalData || 'No Data Received'}
@@ -82,12 +88,11 @@ const Bluetooth = () => {
                 </ScrollView>
             </View>
 
-            {/* Button to navigate to Pupuk page */}
-            <View className='flex justify-center items-center mt-4'>
+            <View className='flex justify-center items-center h-1/6 mb-10'>
                 <CustomButton
                     title="Go to Pupuk Page"
-                    handlePress={() => navigation.navigate('Pupuk')}
-                    containerStyles='bg-primary w-52 h-12 rounded-xl'
+                    handlePress={() => router.push('./pupuk')}
+                    containerStyles='bg-primary w-52 h-10 rounded-xl justify-center items-center'
                     textStyles='font-NSBold text-white text-sm'
                 />
             </View>

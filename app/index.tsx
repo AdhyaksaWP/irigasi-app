@@ -9,9 +9,6 @@ import Ugmlogo from '@/assets/svg/ugmlogo';
 import { useGlobalContext } from '@/context/GlobalProvider';
 
 const SplashPage = () => {
-  const {loading, isLoggedIn} = useGlobalContext();
-
-  if (!loading && isLoggedIn) return <Redirect href="/home"/>
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView contentContainerStyle={{ height: '100%'}}>
@@ -22,7 +19,7 @@ const SplashPage = () => {
           />
           <CustomButton
             title='Mulai'
-            handlePress = {() => {router.push('./sign-in')}}
+            handlePress = {() => {router.push('./home')}}
             containerStyles = 'bg-secondary w-44 h-10 rounded-lg items-center justify-center'
             textStyles = 'font-NSBold text-white text-xl'
           />

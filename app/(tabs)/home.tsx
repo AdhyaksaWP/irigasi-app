@@ -59,18 +59,6 @@ const HomeScreen: React.FC = () => {
             <Text className='font-NSSemibold text-lg py-5 text-[#484C52]'>About</Text>
           </TouchableOpacity> */}
         </View>
-
-        <View className='justify-center items-center w-full h-1/5'>
-          <CustomButton
-            title='Log Out'
-            handlePress={async () => {
-              await deleteCurrentSession();
-              router.push('../sign-in')
-            }}
-            containerStyles='bg-red-600 w-4/5 h-16 items-center justify-center rounded-2xl my-4 shadow-lg shadow-black'
-            textStyles='font-NSSemibold text-lg text-[#484C52]'
-          />
-        </View>
       </ScrollView>
       <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#ffffff'/>
     </SafeAreaView>

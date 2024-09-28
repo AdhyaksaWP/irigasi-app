@@ -4,11 +4,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useBleManager } from '@/context/BLEContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getAreaOfPolygon } from 'geolib'; // Import the geolib function to calculate area
 import IconButton from '@/components/iconButton';
 import FocusAwareStatusBar from '@/components/FocusedStatusBar';
 import { useNavigation } from '@react-navigation/native';
+import ResultModal from '@/components/ResultsModal';
 
 const zoomLevel = 17;
 const latitudeDelta = Math.exp(Math.log(360) - zoomLevel * Math.LN2);
@@ -28,7 +29,7 @@ const Pupuk = () => {
   const [drawingMode, setDrawingMode] = useState<Boolean>(false);
   const [polygonCoordinates, setPolygonCoordinates] = useState<any[]>([]);
   const [area, setArea] = useState<number | null>(null); // Store the calculated area
-  const navigation = useNavigation(); // To navigate to the result page
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
     // Request for location permission and retrieve current location
@@ -75,7 +76,16 @@ const Pupuk = () => {
     if (!drawingMode && polygonCoordinates.length > 2) {
       const calculatedArea = getAreaOfPolygon(polygonCoordinates);
       setArea(calculatedArea); // Store the calculated area
-      Alert.alert('Luas Area', `Luas area yang dipilih adalah: ${calculatedArea.toFixed(2)} m²`);
+      Alert.alert(
+        'Luas Area', 
+        `Luas area yang dipilih adalah: ${calculatedArea.toFixed(2)} m²`,
+        [
+          {
+            text: 'Kalkulasi Pupuk',
+            onPress: () => setModalVisible(true),
+          }
+        ]
+      );
     }
   };
 
@@ -94,18 +104,6 @@ const Pupuk = () => {
 
   const handleCancelSelectMarker = async () => {
     setSelectedMarkerIndex(null);
-  };
-
-  const handleProcessResults = () => {
-    if (area && polygonCoordinates.length >= 4) {
-      navigation.navigate('Result', {
-        polygonCoordinates,
-        area,
-        sensorData
-      });
-    } else {
-      Alert.alert('Incomplete Data', 'Ensure the area is calculated and you have 4 points.');
-    }
   };
 
   return (
@@ -183,7 +181,7 @@ const Pupuk = () => {
                       handlePress={handleRemoveArea}
                       focused={false}
                     />
-                    {area && (
+                    {/* {area && (
                       <IconButton
                         source="ProcessIcon"
                         color="rgb(34 197 94)"
@@ -195,7 +193,7 @@ const Pupuk = () => {
                         handlePress={handleProcessResults}
                         focused={false}
                       />
-                    )}
+                    )} */}
                 </>
               )}
 
@@ -229,6 +227,15 @@ const Pupuk = () => {
           </View>
         </View>
       </ScrollView>
+
+      <ResultModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        polygonCoordinates={polygonCoordinates}
+        area={area}
+        sensorData={sensorData}
+      />
+
       <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#F9C405'/>
     </SafeAreaView>
   );

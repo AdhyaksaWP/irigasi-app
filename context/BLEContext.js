@@ -147,16 +147,27 @@ const BleManagerProvider = ({ children }) => {
 
     const connectToDevice = async (device) => {
         try {
+            // Attempt to connect to the device
             const deviceConnection = await bleManager.connectToDevice(device.id);
             setConnectedDevice(deviceConnection);
+            
+            // Discover all services and characteristics
             await deviceConnection.discoverAllServicesAndCharacteristics();
-            bleManager.stopDeviceScan();
-            startStreamingData(deviceConnection);
+            bleManager.stopDeviceScan();  // Stop scanning if connected
+            startStreamingData(deviceConnection);  // Start streaming data
+    
             console.log("Successfully connected to device:", deviceConnection.name || deviceConnection.id);
         } catch (error) {
-            console.log("ERROR IN CONNECTION", error);
+            console.error("ERROR IN CONNECTION", error);
+            
+            // Optionally handle specific error types or perform a retry
+            if (error.message.includes('disconnected')) {
+                console.warn("Device was disconnected, attempting to reconnect...");
+                // Optionally, you could call connectToDevice again here if needed
+            }
         }
-    }
+    };
+    
 
     const checkConnectionStatus = () => {
         return connectedDevice !== null;

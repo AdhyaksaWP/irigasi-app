@@ -35,20 +35,20 @@ void setup() {
 
 void loop() {
   // Update and notify the characteristic value
-  // static int sensorValue = 0;
-  // sensorValue++;
+  static int sensorValue = 0;
+  sensorValue++;
   
-  // // Convert the sensor value to a string and set it as the characteristic value
-  // String sensorValueStr = String(sensorValue);
-  // String sensorValueToSend;
+  // Convert the sensor value to a string and set it as the characteristic value
+  String sensorValueStr = String(sensorValue);
+  String sensorValueToSend;
 
-  // for (int i = 0; i<6; i++){
-  //   sensorValueToSend += sensorValueStr + ",";
-  // }
-  // pCharacteristic->setValue(sensorValueToSend.c_str());
+  for (int i = 0; i<6; i++){
+    sensorValueToSend += sensorValueStr + ",";
+  }
+  pCharacteristic->setValue(sensorValueToSend.c_str());
   
   // Notify the client of the new value
-  // pCharacteristic->notify();
+  pCharacteristic->notify();
   dataReceived = pCharacteristic->getValue();
   
   Serial.print("Value read: ");

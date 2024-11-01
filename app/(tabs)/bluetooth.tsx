@@ -17,27 +17,24 @@ const Bluetooth = () => {
         connectedDevice, 
         checkConnectionStatus, 
         sensorIrigasi, 
+        setSensorIrigasi, // Assuming you have a way to set sensorIrigasi in useBleManager
         disconnectFromDevice 
     } = useBleManager();
     
     const [isScanning, setIsScanning] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
-    const [terminalData, setTerminalData] = useState('No Data Received'); // Default message
+    const [terminalData, setTerminalData] = useState([]); // Initialize as an empty array
 
-    // Format sensor data for display with units
-    useEffect(() => {
-        if (sensorIrigasi && sensorIrigasi.length > 0) {
-            setTerminalData(
-                `N: ${sensorIrigasi[0]} mg/kg\n` +
-                `P: ${sensorIrigasi[1]} mg/kg\n` +
-                `K: ${sensorIrigasi[2]} mg/kg\n` +
-                `EC: ${sensorIrigasi[3]} us/cm\n` +
-                `Suhu: ${sensorIrigasi[4]} \u00B0C\n` +
-                `Kelembapan: ${sensorIrigasi[5]} %\n` +
-                `pH: ${sensorIrigasi[6]}`
-            );
-        }
-    }, [sensorIrigasi]);
+    // Format sensor data for display with units and type-based formatting
+    const formattedData = terminalData.length > 0
+        ? `N: ${Math.round(terminalData[0])} mg/kg\n` +
+          `P: ${Math.round(terminalData[1])} mg/kg\n` +
+          `K: ${Math.round(terminalData[2])} mg/kg\n` +
+          `EC: ${Math.round(terminalData[3])} us/cm\n` +
+          `Suhu: ${terminalData[4]} \u00B0C\n` +
+          `Kelembapan: ${terminalData[5]} %\n` +
+          `pH: ${terminalData[6]}`
+        : "No Data Received";
 
     const scanForDevices = async () => {
         const isPermissionEnabled = await requestPermissions();
@@ -92,7 +89,7 @@ const Bluetooth = () => {
             <View className='bg-gray-100 p-4 h-1/5 w-full'>
                 <ScrollView>
                     <Text className='font-NSBold text-sm'>
-                        {terminalData}
+                        {formattedData}
                     </Text>
                 </ScrollView>
             </View>

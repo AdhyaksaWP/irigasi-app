@@ -17,13 +17,20 @@ const Bluetooth = () => {
         connectedDevice, 
         checkConnectionStatus, 
         sensorIrigasi, 
-        setSensorIrigasi, // Assuming you have a way to set sensorIrigasi in useBleManager
+        setSensorIrigasi, 
         disconnectFromDevice 
     } = useBleManager();
     
     const [isScanning, setIsScanning] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
-    const [terminalData, setTerminalData] = useState([]); // Initialize as an empty array
+    const [terminalData, setTerminalData] = useState([]); 
+
+    // Update terminalData whenever sensorIrigasi changes
+    useEffect(() => {
+        if (sensorIrigasi && sensorIrigasi.length > 0) {
+            setTerminalData(sensorIrigasi);
+        }
+    }, [sensorIrigasi]);
 
     // Format sensor data for display with units and type-based formatting
     const formattedData = terminalData.length > 0

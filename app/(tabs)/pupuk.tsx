@@ -4,8 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MapView, { PROVIDER_GOOGLE, Marker, Polygon } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useBleManager } from '@/context/BLEContext';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getAreaOfPolygon } from 'geolib'; // Import the geolib function to calculate area
+import { getAreaOfPolygon } from 'geolib'; 
 import IconButton from '@/components/iconButton';
 import FocusAwareStatusBar from '@/components/FocusedStatusBar';
 import { useNavigation } from '@react-navigation/native';
@@ -28,11 +27,10 @@ const Pupuk = () => {
   const [selectedMarkerIndex, setSelectedMarkerIndex] = useState<number | null>(null);
   const [drawingMode, setDrawingMode] = useState<Boolean>(false);
   const [polygonCoordinates, setPolygonCoordinates] = useState<any[]>([]);
-  const [area, setArea] = useState<number | null>(null); // Store the calculated area
+  const [area, setArea] = useState<number | null>(null); 
   const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    // Request for location permission and retrieve current location
     handleRegionChange();
   }, []);
 
@@ -75,7 +73,7 @@ const Pupuk = () => {
 
     if (!drawingMode && polygonCoordinates.length > 2) {
       const calculatedArea = getAreaOfPolygon(polygonCoordinates);
-      setArea(calculatedArea); // Store the calculated area
+      setArea(calculatedArea); 
       Alert.alert(
         'Luas Area', 
         `Luas area yang dipilih adalah: ${calculatedArea.toFixed(2)} m²`,
@@ -93,13 +91,13 @@ const Pupuk = () => {
     if (selectedMarkerIndex !== null) {
       const updatedMarkers = mapRegion.filter((_, index) => index !== selectedMarkerIndex);
       setMapRegion(updatedMarkers);
-      setSelectedMarkerIndex(null); // Reset after deletion
+      setSelectedMarkerIndex(null); 
     }
   };
 
   const handleRemoveArea = async () => {
     setPolygonCoordinates([]);
-    setArea(null); // Clear the area when removing the polygon
+    setArea(null); 
   };
 
   const handleCancelSelectMarker = async () => {
@@ -111,14 +109,16 @@ const Pupuk = () => {
       <ScrollView contentContainerStyle={{ height: '100%' }}>
         <View className='w-full h-full'>
           <View className='w-full bg-primary h-20 justify-center items-center border-b-4 border-b-gray-200'>
-            <Text className='font-NSBold'>Map API Daerah</Text>
+            <Text className='font-NSBold text-white'> {/* Text color changed to white */}
+              Map API Daerah
+            </Text>
           </View>
 
           <MapView
             provider={PROVIDER_GOOGLE}
             className='w-full h-2/3'
             region={mapRegion[0]} 
-            onPress={handleMapPress} // Handle map press to add polygon points
+            onPress={handleMapPress} 
           >
             {mapRegion.length > 1 && mapRegion.map((value, index) => (
               <Marker
@@ -181,19 +181,6 @@ const Pupuk = () => {
                       handlePress={handleRemoveArea}
                       focused={false}
                     />
-                    {/* {area && (
-                      <IconButton
-                        source="ProcessIcon"
-                        color="rgb(34 197 94)"
-                        iconWidth={40}
-                        iconHeight={40}
-                        name="Process Results"
-                        containerStyles="w-20 h-20 rounded-xl border-green-500 border-4 flex items-center justify-center mx-5"
-                        textStyles="font-NSBold text-green-500"
-                        handlePress={handleProcessResults}
-                        focused={false}
-                      />
-                    )} */}
                 </>
               )}
 
@@ -236,7 +223,7 @@ const Pupuk = () => {
         sensorData={sensorData}
       />
 
-      <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#F9C405'/>
+      <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#31511e'/>
     </SafeAreaView>
   );
 };

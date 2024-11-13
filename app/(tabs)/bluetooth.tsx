@@ -4,7 +4,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useBleManager } from '../../context/BLEContext';
 import DeviceList from '@/components/DeviceConnectionModal';
 import CustomButton from '@/components/custombutton';
-import BluetoothIcon from '@/assets/icons/bluetoothIcon';
 import FocusAwareStatusBar from '@/components/FocusedStatusBar';
 import { router } from 'expo-router';
 
@@ -25,14 +24,12 @@ const Bluetooth = () => {
     const [isConnected, setIsConnected] = useState(false);
     const [terminalData, setTerminalData] = useState([]); 
 
-    // Update terminalData whenever sensorIrigasi changes
     useEffect(() => {
         if (sensorIrigasi && sensorIrigasi.length > 0) {
             setTerminalData(sensorIrigasi);
         }
     }, [sensorIrigasi]);
 
-    // Format sensor data for display with units and type-based formatting
     const formattedData = terminalData.length > 0
         ? `N: ${Math.round(terminalData[0])} mg/kg\n` +
           `P: ${Math.round(terminalData[1])} mg/kg\n` +
@@ -63,16 +60,8 @@ const Bluetooth = () => {
 
     return (
         <SafeAreaView className='bg-white h-full flex justify-center'>
-            <View className='flex justify-center items-center bg-primary h-1/2 w-full rounded-b-xl gap-y-10 shadow-lg shadow-black mb-10'>
-                <View className='flex-row justify-center items-center'>
-                    <BluetoothIcon
-                        width={20}
-                        height={37}
-                        color="#000000"
-                    />
-                </View>
-
-                <Text className='font-NSBold'>
+            <View className='flex justify-center items-center bg-primary h-2/5 w-full rounded-b-xl gap-y-10 shadow-lg shadow-black mb-10'>
+                <Text className='text-white font-NSBold'> {/* Status text color changed to white */}
                     Status: {isConnected ? "Connected" : "Disconnected"}
                 </Text>
 
@@ -86,14 +75,14 @@ const Bluetooth = () => {
                 </View>
             </View>
 
-            <View className='flex justify-center items-center h-1/5 bg-white'>
+            <View className='flex justify-center items-center h-1/4 bg-white'>
                 <DeviceList
                     devices={allDevices}
                     connectToPeripheral={connectToDevice}
                 />    
             </View>
 
-            <View className='bg-gray-100 p-4 h-1/5 w-full'>
+            <View className='bg-gray-100 p-4 h-1/4 w-full'>
                 <ScrollView>
                     <Text className='font-NSBold text-sm'>
                         {formattedData}
@@ -110,7 +99,7 @@ const Bluetooth = () => {
                 />
             </View>
 
-            <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#F9C405'/>
+            <FocusAwareStatusBar barStyle={'dark-content'} backgroundColor='#31511e'/>
         </SafeAreaView>
     );
 };

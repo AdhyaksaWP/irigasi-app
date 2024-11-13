@@ -10,14 +10,14 @@ import { BleManagerProvider } from '@/context/BLEContext';
 const TabsLayout = () => {
   return (
     <BleManagerProvider>
-      <View className='bg-white flex-1'>
+      <View className='bg-[#31511e] flex-1'>
         <Tabs
           screenOptions={{
             tabBarShowLabel: false,
-            tabBarActiveTintColor: '#49454F',
+            tabBarActiveTintColor: '#1a1a19',
             tabBarInactiveTintColor: 'rgba(73, 69, 79, 0.5)',
             tabBarStyle: {
-              backgroundColor: '#F9C405',
+              backgroundColor: '#859f3d',
               paddingTop: 25,
               marginHorizontal: 20,
               marginBottom: 25,

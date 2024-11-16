@@ -26,7 +26,7 @@ const SplashPage = () => {
         </View>
       </ScrollView>
       <StatusBar
-        backgroundColor='#F9C405'
+        backgroundColor='#31511e'
         style='dark'
       />
     </SafeAreaView>

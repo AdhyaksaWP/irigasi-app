@@ -109,7 +109,7 @@ const Pupuk = () => {
       <ScrollView contentContainerStyle={{ height: '100%' }}>
         <View className='w-full h-full'>
           <View className='w-full bg-primary h-20 justify-center items-center border-b-4 border-b-gray-200'>
-            <Text className='font-NSBold text-white'> {/* Text color changed to white */}
+            <Text className='font-NSBold text-white'>
               Map API Daerah
             </Text>
           </View>

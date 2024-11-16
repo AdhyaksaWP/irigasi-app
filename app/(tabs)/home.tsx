@@ -7,9 +7,9 @@ import FocusAwareStatusBar from '@/components/FocusedStatusBar';
 
 const HomeScreen: React.FC = () => {
   return (
-    <SafeAreaView className="bg-[#31511e] h-full">
+    <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ height: '100%' }}>
-        <View className='h-1/5 items-center justify-end'>
+        <View className='h-1/5 items-center justify-end mb-10'>
           <Text>
             <Text className='font-NSBold text-2xl text-white'>Selamat Datang,{"\n"}</Text>
             <Text className='font-NSSemibold text-lg text-white'>Di Aplikasi Irigasi Lahan Bawang</Text>

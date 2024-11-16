@@ -21,6 +21,7 @@ const TabsLayout = () => {
               paddingTop: 25,
               marginHorizontal: 20,
               marginBottom: 25,
+              marginTop: 25,
               borderRadius: 15,
               height: 90,
             }

@@ -132,7 +132,7 @@ const BleManagerProvider = ({ children }) => {
             }
             if (device) {
                 setAllDevices((prevState) => {
-                    if (!isDuplicateDevice(prevState, device)) {
+                    if (!isDuplicateDevice(prevState, device) && device.name) {
                         return [...prevState, device];
                     }
                     return prevState;
